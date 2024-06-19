@@ -2,8 +2,8 @@ name: build-and-release-db
 run-name: ${{ github.actor }} is compiling the sql file
 on: 
   push:
-    branches:
-      - "main"
+    tags:
+      - "v.*"
 
 jobs: 
   build:
