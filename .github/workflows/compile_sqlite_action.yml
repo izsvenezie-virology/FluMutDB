@@ -6,18 +6,15 @@ on:
       - "main"
 
 jobs: 
-  build-and-release:
+  build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - run: cat FluMutDb5.sql | sqlite3 FluMutDb5.sqlite3
-    
-    - uses: "marvinpinto/action-automatic-releases@latest"
-      with:
-        repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        automatic_release_tag: "latest"
-        prerelease: true
-        title: "Development Build"
-        files: |
-          LICENSE.txt
-          FluMutDb5.sqlite3
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build
+        run: cat FluMutDb5.sql | sqlite3 FluMutDb5.sqlite3
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: FluMutDb5.sqlite3
