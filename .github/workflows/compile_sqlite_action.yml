@@ -18,3 +18,4 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: FluMutDb5.sqlite3
+          tag_name: ${{ steps.tag.outputs.tag }}
