@@ -1,0 +1,8 @@
+name: build-sqlite-db
+run-name: ${{ github.actor }} is compiling the sql file
+on: [push]
+jobs: 
+  compile-sqlite:
+    runs-on: ubuntu-latest
+    steps:
+    - run: cat FluMutDb5.sql | sqlite3.exe FluMutDb5.sqlite3
