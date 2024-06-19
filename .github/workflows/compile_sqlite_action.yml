@@ -1,9 +1,23 @@
-name: build-sqlite-db
+name: build-and-release-db
 run-name: ${{ github.actor }} is compiling the sql file
-on: [push]
+on: 
+  push:
+    branches:
+      - "main"
+
 jobs: 
-  compile-sqlite:
+  build-and-release:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
     - run: cat FluMutDb5.sql | sqlite3 FluMutDb5.sqlite3
+    
+    - uses: "marvinpinto/action-automatic-releases@latest"
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "latest"
+        prerelease: true
+        title: "Development Build"
+        files: |
+          LICENSE.txt
+          FluMutDb5.sqlite3
