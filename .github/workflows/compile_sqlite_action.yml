@@ -6,4 +6,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - run: cat FluMutDb5.sql | sqlite3.exe FluMutDb5.sqlite3
+    - run: cat FluMutDb5.sql | sqlite3 FluMutDb5.sqlite3
