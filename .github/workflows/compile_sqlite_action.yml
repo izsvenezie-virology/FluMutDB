@@ -15,7 +15,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Build
-        run: cat FluMutDb5.sql | sqlite3 FluMutDb5.sqlite3
+        run: cat FluMutDB.sql | sqlite3 FluMutDB.sqlite3
 
       - name: Release
         uses: softprops/action-gh-release@v2

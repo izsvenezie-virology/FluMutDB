@@ -80,6 +80,11 @@ CREATE TABLE IF NOT EXISTS "mutation_mappings" (
 	FOREIGN KEY("reference_name") REFERENCES "references"("name") ON UPDATE CASCADE,
 	FOREIGN KEY("mutation_name") REFERENCES "mutations"("name") ON UPDATE CASCADE
 );
+CREATE TABLE IF NOT EXISTS "db_version" (
+	"major"	INTEGER NOT NULL UNIQUE,
+	"minor"	INTEGER NOT NULL UNIQUE,
+	"date"	TEXT NOT NULL UNIQUE
+);
 INSERT INTO "segments" ("name") VALUES ('HA'),
  ('NA'),
  ('PB2'),
@@ -399,7 +404,8 @@ INSERT INTO "markers" ("id","notes") VALUES (1,NULL),
  (386,''),
  (387,''),
  (388,''),
- (389,'');
+ (389,''),
+ (390,'H3_numbering: 193');
 INSERT INTO "markers_mutations" ("marker_id","mutation_name") VALUES (1,'M1:N30D'),
  (2,'M1:T215A'),
  (3,'M1:I43M'),
@@ -902,7 +908,8 @@ INSERT INTO "markers_mutations" ("marker_id","mutation_name") VALUES (1,'M1:N30D
  (388,'NP:R100V'),
  (389,'NP:F313V'),
  (389,'NP:L283P'),
- (389,'NP:R100V');
+ (389,'NP:R100V'),
+ (390,'HA1-5:N189D');
 INSERT INTO "mutations" ("name","type","protein_name") VALUES ('M1:N30D','SNP','M1'),
  ('M1:T215A','SNP','M1'),
  ('M1:I43M','SNP','M1'),
@@ -1194,7 +1201,8 @@ INSERT INTO "mutations" ("name","type","protein_name") VALUES ('M1:N30D','SNP','
  ('PB2:M631L','SNP','PB2'),
  ('NP:L283P','SNP','NP'),
  ('NP:R100I','SNP','NP'),
- ('NP:R100V','SNP','NP');
+ ('NP:R100V','SNP','NP'),
+ ('HA1-5:N189D','SNP','HA1');
 INSERT INTO "proteins" ("name","segment_name") VALUES ('HA1','HA'),
  ('HA2','HA'),
  ('NA','NA'),
@@ -3713,7 +3721,9 @@ INSERT INTO "markers_effects" ("marker_id","paper_id","effect_name","subtype","i
  (365,'Meijer A. et al., 2014','Normal Inhibition to Oseltamivir','Unknown',NULL,NULL),
  (365,'Meijer A. et al., 2014','Highly reduced inhibition to Zanamivir','Unknown',NULL,NULL),
  (365,'Meijer A. et al., 2014','Highly reduced inhibition to Peramivir','Unknown',NULL,NULL),
- (365,'Meijer A. et al., 2014','Reduced inhibition to Laninamivir','Unknown',NULL,NULL);
+ (365,'Meijer A. et al., 2014','Reduced inhibition to Laninamivir','Unknown',NULL,NULL),
+ (390,'Jang S. et al., 2024','Increased virus binding to α2-6','H5N1',0,0),
+ (390,'Jang S. et al., 2024','Transmissible among ferrets','H5N1',0,0);
 INSERT INTO "annotations" ("start","end","protein_name","reference_name") VALUES (1,2280,'PB2','PB2'),
  (1,2274,'PB1','PB1'),
  (95,367,'PB1-F2','PB1'),
@@ -4020,7 +4030,9 @@ INSERT INTO "mutation_mappings" ("id","mutation_name","reference_name","position
  (293,'PB2:M631L','PB2',631,'M','L'),
  (294,'NP:L283P','NP',283,'L','P'),
  (295,'NP:R100I','NP',100,'R','I'),
- (296,'NP:R100V','NP',100,'R','V');
+ (296,'NP:R100V','NP',100,'R','V'),
+ (297,'HA1-5:N189D','HA',189,'N','D');
+INSERT INTO "db_version" ("major","minor","date") VALUES (5,0,'2024-06-19');
 CREATE VIEW markers_summary AS
   SELECT markers_mutations.marker_id,
       group_concat(markers_mutations.mutation_name) AS all_mutations,
