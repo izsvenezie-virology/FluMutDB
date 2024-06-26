@@ -1,0 +1,39 @@
+name: Create release and deploy
+run-name: ${{ github.actor }} is releasing ${{ github.ref }}
+on: 
+  push:
+    tags:
+      - "v.*"
+
+permissions:
+  contents: write
+
+jobs: 
+  build-sqlite-db:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build SQLite DB
+        run: cat flumut_db.sql | sqlite3 src/flumut_db_data/flumut_db.sqlite
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.x'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install build
+      - name: Build package
+        run: python -m build
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          files: 
+            src/flumut_db_data/flumut_db.sqlite
+            dist/*
+      
+      

@@ -1,3 +1,3 @@
 # FluMutDb
 
-THis repository contains the database for FluMut
+This repository contains the database for FluMut
