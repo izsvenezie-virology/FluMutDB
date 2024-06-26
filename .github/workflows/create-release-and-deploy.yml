@@ -30,6 +30,12 @@ jobs:
       - name: Build package
         run: python -m build
 
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist_folder
+          path: dist
+
       - name: Create release
         uses: softprops/action-gh-release@v2
         with:
@@ -38,4 +44,19 @@ jobs:
             src/flumut_db_data/flumut_db.sqlite
             dist/*
       
-      
+
+  pypi-publish:
+    name: upload release to PyPI
+    runs-on: ubuntu-latest
+    # Specifying a GitHub environment is optional, but strongly encouraged
+    permissions:
+      # IMPORTANT: this permission is mandatory for trusted publishing
+      id-token: write
+    steps:
+    - uses: actions/download-artifact@v4
+      with:
+        name: dist_folder
+        path: dist
+    # retrieve your distributions here
+    - name: Publish package distributions to PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1 
