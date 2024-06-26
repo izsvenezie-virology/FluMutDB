@@ -15,7 +15,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Build SQLite DB
-        run: cat flumut_db.sql | sqlite3 src/flumut_db_data/flumut_db.sqlite
+        run: |
+          mkdir -p src/flumut_db_data/
+          cat flumut_db.sql | sqlite3 src/flumut_db_data/flumut_db.sqlite
 
       - name: Set up Python
         uses: actions/setup-python@v3
@@ -32,7 +34,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          files: 
+          files: |
             src/flumut_db_data/flumut_db.sqlite
             dist/*
       
