@@ -9,7 +9,7 @@ permissions:
   contents: write
 
 jobs: 
-  create-release:
+  build-sqlite-db:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -17,6 +17,7 @@ jobs:
       - name: Build SQLite DB
         run: |
           mkdir -p src/flumut_db_data/
+          touch src/flumut_db_data/__init__.py
           cat flumut_db.sql | sqlite3 src/flumut_db_data/flumut_db.sqlite
 
       - name: Set up Python
@@ -43,3 +44,21 @@ jobs:
           files: |
             src/flumut_db_data/flumut_db.sqlite
             dist/*
+      
+
+  pypi-publish:
+    name: upload release to PyPI
+    runs-on: ubuntu-latest
+    # Specifying a GitHub environment is optional, but strongly encouraged
+    # environment: release
+    permissions:
+      # IMPORTANT: this permission is mandatory for trusted publishing
+      id-token: write
+    steps:
+    - uses: actions/download-artifact@v4
+      with:
+        name: dist_folder
+        path: dist
+    # retrieve your distributions here
+    - name: Publish package distributions to PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1 
