@@ -1,4 +1,4 @@
-import flumutdb
+import flumutdb.flumutdb
 from typing import Tuple
 
 def get_db_file()-> str:
@@ -8,12 +8,12 @@ def get_db_file()-> str:
     db_file: `str`
         Path to db file.
     """
-    return flumutdb.get_db_file()
+    return flumutdb.flumutdb.get_db_file()
 
 def update_db_file()-> None:
     """Update DB file from latest GitHub release.
     """
-    return flumutdb.update_db_file()
+    return flumutdb.flumutdb.update_db_file()
 
 def get_db_version()-> Tuple[str, str, str]:
     """Display DB version.
@@ -22,4 +22,4 @@ def get_db_version()-> Tuple[str, str, str]:
     versions: `Tuple[str, str, str]`
         A tuple of major, minor and date.
     """
-    return flumutdb.get_db_version()
+    return flumutdb.flumutdb.get_db_version()
