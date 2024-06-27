@@ -1,5 +1,4 @@
 # FluMutDB specific
-flumut_db_data
 *.ps1
 
 # Byte-compiled / optimized / DLL files
