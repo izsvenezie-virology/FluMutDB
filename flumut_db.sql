@@ -4030,7 +4030,7 @@ CREATE TABLE IF NOT EXISTS "db_version" (
 	"minor"	INTEGER NOT NULL UNIQUE,
 	"date"	TEXT NOT NULL UNIQUE
 );
-INSERT INTO db_version VALUES(5,4,'2024-06-27');
+INSERT INTO db_version VALUES(5,5,'2024-06-27');
 DELETE FROM sqlite_sequence;
 INSERT INTO sqlite_sequence VALUES('markers',390);
 INSERT INTO sqlite_sequence VALUES('mutation_mappings',297);
