@@ -28,9 +28,10 @@ jobs:
         uses: actions/checkout@v4
       - name: Build SQLite DB
         run: |
-          mkdir -p src/flumut_db_data/
-          touch src/flumut_db_data/__init__.py
-          cat flumut_db.sql | sqlite3 src/flumut_db_data/flumut_db.sqlite
+          mkdir -p src/flumutdb/
+          touch src/flumutdb/__init__.py
+          cat flumut_db.sql | sqlite3 src/flumutdb/flumut_db.sqlite
+          sqlite3.exe $database "SELECT major || '.' || minor FROM db_version" >version.txt
 
       - name: Set up Python
         uses: actions/setup-python@v3
