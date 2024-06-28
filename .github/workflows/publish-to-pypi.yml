@@ -31,7 +31,7 @@ jobs:
           mkdir -p src/flumutdb/
           touch src/flumutdb/__init__.py
           cat flumut_db.sql | sqlite3 src/flumutdb/flumut_db.sqlite
-          sqlite3.exe $database "SELECT major || '.' || minor FROM db_version" >version.txt
+          sqlite3 $database "SELECT major || '.' || minor FROM db_version" >version.txt
 
       - name: Set up Python
         uses: actions/setup-python@v3
