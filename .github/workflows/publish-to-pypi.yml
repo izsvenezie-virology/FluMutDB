@@ -8,9 +8,10 @@
 
 name: Upload FluMutDB release to PyPI
 
-on:
-  release:
-    types: [published]
+on: 
+  push:
+    tags:
+      - "v.*"
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -31,7 +32,7 @@ jobs:
           mkdir -p src/flumutdb/
           touch src/flumutdb/__init__.py
           cat flumut_db.sql | sqlite3 src/flumutdb/flumut_db.sqlite
-          sqlite3 $database "SELECT major || '.' || minor FROM db_version" >version.txt
+          sqlite3 src/flumutdb/flumut_db.sqlite "SELECT major || '.' || minor FROM db_version" >version.txt
 
       - name: Set up Python
         uses: actions/setup-python@v3
