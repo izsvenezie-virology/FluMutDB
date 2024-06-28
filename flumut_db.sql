@@ -29,7 +29,7 @@ CREATE TABLE "db_version" (
 	"minor"	INTEGER NOT NULL UNIQUE,
 	"date"	TEXT NOT NULL UNIQUE
 );
-INSERT INTO "db_version" VALUES(5,16,'2024-06-28');
+INSERT INTO "db_version" VALUES(6,0,'2024-06-28');
 CREATE TABLE "effects" (
 	"name"	TEXT NOT NULL,
 	PRIMARY KEY("name")
