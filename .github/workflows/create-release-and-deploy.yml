@@ -1,19 +1,21 @@
-name: Create release and deploy
+name: Create release and deploy FluMutDB
 run-name: ${{ github.actor }} is releasing ${{ github.ref }}
+
 on: 
   push:
     tags:
       - "v.*"
 
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-permissions:
-  contents: write
 
-jobs: 
-  build-sqlite-db:
+jobs:
+  build:
+    name: Build FluMutDB
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -23,7 +25,11 @@ jobs:
           touch src/flumutdb/__init__.py
           cat flumut_db.sql | sqlite3 src/flumutdb/flumut_db.sqlite
           sqlite3 src/flumutdb/flumut_db.sqlite "SELECT major || '.' || minor FROM db_version" >version.txt
-
+      - name: Upload sqlite DB
+        uses: actions/upload-artifact@v4
+        with:
+          name: db
+          path: src/flumutdb/flumut_db.sqlite
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
@@ -32,19 +38,56 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install build
-      - name: Build package
+      - name: Build FluMutDB
         run: python -m build
-
-      - name: Upload artifacts
+      - name: Upload dist
         uses: actions/upload-artifact@v4
         with:
-          name: dist_folder
+          name: dist
           path: dist
+          if-no-files-found: error
 
-      - name: Create release
+
+  release:
+    name: Create release on GitHub
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    needs: [build]
+
+    steps:
+      - name: Download db
+        uses: actions/download-artifact@v4
+        with:
+          name: db
+      - name: Download dist
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+      - name: Release
         uses: softprops/action-gh-release@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           files: |
-            src/flumutdb/flumut_db.sqlite
+            flumut_db.sqlite
             dist/*
+
+
+  pypi:
+    name: Publish to PyPI
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    environment: pypi-release
+    needs: release
+
+    steps:
+    - name: Download dist artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: dist
+        path: dist
+    - name: Publish to PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
