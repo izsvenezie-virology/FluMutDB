@@ -29,12 +29,11 @@ CREATE TABLE "db_version" (
 	"minor"	INTEGER NOT NULL UNIQUE,
 	"date"	TEXT NOT NULL UNIQUE
 );
-INSERT INTO "db_version" VALUES(6,1,'2024-07-01');
+INSERT INTO "db_version" VALUES(6,2,'2024-07-15');
 CREATE TABLE "effects" (
 	"name"	TEXT NOT NULL,
 	PRIMARY KEY("name")
 );
-INSERT INTO "effects" VALUES('Airborne transmissible in ferrets');
 INSERT INTO "effects" VALUES('Contact transmission in guinea pigs');
 INSERT INTO "effects" VALUES('Contributes to airborne pathogenicity in ferrets');
 INSERT INTO "effects" VALUES('Contributes to contact transmission in guinea pigs');
@@ -1603,12 +1602,9 @@ INSERT INTO "markers_effects" VALUES(183,'Yamada S. et al., 2006','Increased vir
 INSERT INTO "markers_effects" VALUES(183,'Suttie A. et al., 2019','Increased virus binding to α2-6','H5N1',NULL,NULL);
 INSERT INTO "markers_effects" VALUES(184,'Yamada S. et al., 2006','Increased virus binding to α2-6','H5N1',NULL,NULL);
 INSERT INTO "markers_effects" VALUES(184,'Suttie A. et al., 2019','Increased virus binding to α2-6','H5N1',NULL,NULL);
-INSERT INTO "markers_effects" VALUES(185,'Herfst S. et al., 2012','Airborne transmissible in ferrets','H5N1',NULL,NULL);
-INSERT INTO "markers_effects" VALUES(185,'Herfst S. et al., 2012','Contact transmission in guinea pigs','H5N1',NULL,NULL);
-INSERT INTO "markers_effects" VALUES(185,'Linster M. et al., 2014','Airborne transmissible in ferrets','H5N1',NULL,NULL);
-INSERT INTO "markers_effects" VALUES(185,'Linster M. et al., 2014','Contact transmission in guinea pigs','H5N1',NULL,NULL);
-INSERT INTO "markers_effects" VALUES(185,'Suttie A. et al., 2019','Airborne transmissible in ferrets','H5N1',NULL,NULL);
-INSERT INTO "markers_effects" VALUES(185,'Suttie A. et al., 2019','Contact transmission in guinea pigs','H5N1',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(185,'Herfst S. et al., 2012','Transmitted via aerosol among ferrets','H5N1',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(185,'Linster M. et al., 2014','Transmitted via aerosol among ferrets','H5N1',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(185,'Suttie A. et al., 2019','Transmitted via aerosol among ferrets','H5N1',NULL,NULL);
 INSERT INTO "markers_effects" VALUES(186,'Wessels U. et al., 2018','Increased virulence in chickens','H5N1',NULL,NULL);
 INSERT INTO "markers_effects" VALUES(186,'Wessels U. et al., 2018','Increased virulence in mice','H5N1',NULL,NULL);
 INSERT INTO "markers_effects" VALUES(186,'Wessels U. et al., 2018','Increased pH of fusion','H5N1',NULL,NULL);
@@ -2315,8 +2311,8 @@ INSERT INTO "markers_effects" VALUES(339,'Govorkova E. et al., 2022','PA inhibit
 INSERT INTO "markers_effects" VALUES(347,'Govorkova E. et al., 2022','PA inhibitor (PAI) baloxavir susceptibility','H1N1',NULL,NULL);
 INSERT INTO "markers_effects" VALUES(348,'Govorkova E. et al., 2022','PA inhibitor (PAI) baloxavir susceptibility','H1N1',NULL,NULL);
 INSERT INTO "markers_effects" VALUES(352,'Govorkova E. et al., 2022','PA inhibitor (PAI) baloxavir susceptibility','A(H1N1)pdm09',NULL,NULL);
-INSERT INTO "markers_effects" VALUES(366,'Herfst S. et al., 2012','Airborne transmissible in ferrets','H5N1',NULL,NULL);
-INSERT INTO "markers_effects" VALUES(366,'Suttie A. et al., 2019','Airborne transmissible in ferrets','H5N1',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(366,'Herfst S. et al., 2012','Transmitted via aerosol among ferrets','H5N1',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(366,'Suttie A. et al., 2019','Transmitted via aerosol among ferrets','H5N1',NULL,NULL);
 INSERT INTO "markers_effects" VALUES(367,'Yamada S. et al., 2006','Increased virus binding to α2-6','H5N1',NULL,NULL);
 INSERT INTO "markers_effects" VALUES(367,'Suttie A. et al., 2019','Increased virus binding to α2-6','H5N1',NULL,NULL);
 INSERT INTO "markers_effects" VALUES(368,'Auewarakul P. et al., 2007','Increased virus binding to α2-6','H5N1',NULL,NULL);
@@ -2436,6 +2432,13 @@ INSERT INTO "markers_effects" VALUES(67,'Suttie A. et al., 2019','Increased viru
 INSERT INTO "markers_effects" VALUES(160,'Bosch F. et al., 1981','Transmitted via aerosol among guinea pigs','H6N2',NULL,NULL);
 INSERT INTO "markers_effects" VALUES(160,'Qu Z. et al., 2017','Transmitted via aerosol among guinea pigs','H6N2',NULL,NULL);
 INSERT INTO "markers_effects" VALUES(160,'Suttie A. et al., 2019','Transmitted via aerosol among guinea pigs','H6N2',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(151,'Teng Q. et al., 2016','Enhanced replication in mice','H9N2',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(151,'Suttie A. et al., 2019','Enhanced replication in mice','H9N2',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(75,'Suttie A. et al., 2019','Enhanced replication in mice','H7N9',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(75,'Chen G. et al., 2016','Enhanced replication in mice','H7N9',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(75,'Mok C. et al., 2014','Enhanced replication in mice','H7N9',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(111,'Suttie A. et al., 2019','Increased virulence in mice','H6N1',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(111,'Cheng K. et al., 2014','Increased virulence in mice','H6N1',NULL,NULL);
 CREATE TABLE "markers_mutations" (
 	"marker_id"	INTEGER NOT NULL,
 	"mutation_name"	INTEGER NOT NULL,
@@ -2703,7 +2706,7 @@ INSERT INTO "markers_mutations" VALUES(198,'HA1-5:G224S');
 INSERT INTO "markers_mutations" VALUES(199,'HA1-5:T156A');
 INSERT INTO "markers_mutations" VALUES(199,'HA1-5:S223N');
 INSERT INTO "markers_mutations" VALUES(200,'HA1-5:V182N');
-INSERT INTO "markers_mutations" VALUES(200,'HA1-5:N224K');
+INSERT INTO "markers_mutations" VALUES(200,'HA1-5:G224S');
 INSERT INTO "markers_mutations" VALUES(201,'HA1-5:V182G');
 INSERT INTO "markers_mutations" VALUES(201,'HA1-5:K189T');
 INSERT INTO "markers_mutations" VALUES(201,'HA1-5:G224S');
@@ -3145,7 +3148,6 @@ INSERT INTO "mutation_mappings" VALUES(185,'HA1-5:N220K','HA',220,'N','K');
 INSERT INTO "mutation_mappings" VALUES(186,'HA1-5:T315I','HA',315,'T','I');
 INSERT INTO "mutation_mappings" VALUES(187,'HA1-5:N154S','HA',154,'N','S');
 INSERT INTO "mutation_mappings" VALUES(188,'HA1-5:N244D','HA',244,'N','D');
-INSERT INTO "mutation_mappings" VALUES(189,'HA1-5:N224K','HA',224,'N','K');
 INSERT INTO "mutation_mappings" VALUES(190,'HA1-5:V182G','HA',182,'V','G');
 INSERT INTO "mutation_mappings" VALUES(191,'HA1-5:V182K','HA',182,'V','K');
 INSERT INTO "mutation_mappings" VALUES(192,'HA1-5:E183G','HA',183,'E','G');
@@ -3444,7 +3446,6 @@ INSERT INTO "mutations" VALUES('HA1-5:N220K','SNP','HA1');
 INSERT INTO "mutations" VALUES('HA1-5:T315I','SNP','HA1');
 INSERT INTO "mutations" VALUES('HA1-5:N154S','SNP','HA1');
 INSERT INTO "mutations" VALUES('HA1-5:N244D','SNP','HA1');
-INSERT INTO "mutations" VALUES('HA1-5:N224K','SNP','HA1');
 INSERT INTO "mutations" VALUES('HA1-5:V182G','SNP','HA1');
 INSERT INTO "mutations" VALUES('HA1-5:V182K','SNP','HA1');
 INSERT INTO "mutations" VALUES('HA1-5:E183G','SNP','HA1');
