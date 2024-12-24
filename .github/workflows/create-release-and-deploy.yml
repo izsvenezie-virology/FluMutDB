@@ -6,8 +6,6 @@ on:
     tags:
       - "v.*"
 
-  workflow_dispatch:
-
 
 jobs:
   build:
@@ -72,6 +70,28 @@ jobs:
           files: |
             flumut_db.sqlite
             dist/*
+
+
+  update_docs:
+    name: Update FluMut documentation with new markers
+    runs-on: ubuntu-latest
+    needs: [release]
+    environment: FluMutPagesTrigger
+
+    steps:
+      - name: variables
+        run: |
+          repo_owner="izsvenezie-virology" 
+          repo_name="FluMut"  
+          event_type="trigger-update-markers"
+
+          curl -L \
+            -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.PAT }}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            https://api.github.com/repos/$repo_owner/$repo_name/dispatches \
+            -d "{\"event_type\": \"$event_type\", \"client_payload\": {\"unit\": false, \"integration\": true}}"
 
 
   pypi:
