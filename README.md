@@ -11,6 +11,7 @@
 [![GitHub Release](https://img.shields.io/github/v/release/izsvenezie-virology/FluMutDB?label=FluMutDB)](https://github.com/izsvenezie-virology/FluMutDB/releases/latest/)
 
 FluMutDB contains all the data necessary to perform FluMut analysis.
+You can find a complete list of all markers in [FluMut documentation](https://izsvenezie-virology.github.io/FluMut/docs/markers).
 
 # Suggest new markers
 
@@ -33,4 +34,4 @@ This work was partially supported by the FLU-SWITCH Era-Net ICRAD (grant agreeme
 </p>
 
 >Views and opinions expressed are however those of the author(s) only and do not necessarily reflect those of the European Union or the European Health and Digital Executive Agency (HEDEA). 
->Neither the European Union nor the granting authority can be held responsible for them
+>Neither the European Union nor the granting authority can be held responsible for them.
