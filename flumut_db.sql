@@ -29,7 +29,7 @@ CREATE TABLE "db_version" (
 	"minor"	INTEGER NOT NULL UNIQUE,
 	"date"	TEXT NOT NULL UNIQUE
 );
-INSERT INTO "db_version" VALUES(6,3,'2024-09-12');
+INSERT INTO "db_version" VALUES(6,4,'2025-02-24');
 CREATE TABLE "effects" (
 	"name"	TEXT NOT NULL,
 	PRIMARY KEY("name")
@@ -142,6 +142,7 @@ INSERT INTO "effects" VALUES('Increased virus thermostability');
 INSERT INTO "effects" VALUES('Increased viral replication in mice lungs');
 INSERT INTO "effects" VALUES('Contact transmission in ferrets');
 INSERT INTO "effects" VALUES('Prevents airborne transmission in ferrets');
+INSERT INTO "effects" VALUES('Increased binding breadth to glycans bearing terminal α2-3 sialic acids');
 CREATE TABLE "markers" (
 	"id"	INTEGER NOT NULL,
 	"notes"	TEXT,
@@ -328,7 +329,7 @@ INSERT INTO "markers" VALUES(205,'H3_numbering: 186;226;227;228');
 INSERT INTO "markers" VALUES(206,'H3_numbering: 187;190;193;226;228');
 INSERT INTO "markers" VALUES(207,'H3_numbering: 187;226;228');
 INSERT INTO "markers" VALUES(208,'H3_numbering: 187;227');
-INSERT INTO "markers" VALUES(209,'H3_numbering: 189;192');
+INSERT INTO "markers" VALUES(209,'H3_numbering: 189;192 (HA2)');
 INSERT INTO "markers" VALUES(210,'H3_numbering: 190;226;228');
 INSERT INTO "markers" VALUES(211,'H3_numbering: 193;226;228');
 INSERT INTO "markers" VALUES(212,'H3_numbering:196;226;227;228');
@@ -361,8 +362,8 @@ INSERT INTO "markers" VALUES(241,'N2 numbering:222; 274');
 INSERT INTO "markers" VALUES(242,'N2 numbering:222; 274');
 INSERT INTO "markers" VALUES(243,'N2 numbering:150; 222; 246');
 INSERT INTO "markers" VALUES(244,'H3_numbering: 193;228');
-INSERT INTO "markers" VALUES(245,NULL);
-INSERT INTO "markers" VALUES(246,NULL);
+INSERT INTO "markers" VALUES(245,'H3 numbering: 227;375');
+INSERT INTO "markers" VALUES(246,'H3 numbering: 227');
 INSERT INTO "markers" VALUES(247,'A(H1N1)pdm09 WHO');
 INSERT INTO "markers" VALUES(249,'WHO');
 INSERT INTO "markers" VALUES(250,'A(H1N1)pdm09 WHO');
@@ -485,6 +486,8 @@ INSERT INTO "markers" VALUES(414,'H3 numbering: 304');
 INSERT INTO "markers" VALUES(415,'');
 INSERT INTO "markers" VALUES(416,'');
 INSERT INTO "markers" VALUES(417,'');
+INSERT INTO "markers" VALUES(418,'H3 numbering: 199');
+INSERT INTO "markers" VALUES(419,'');
 CREATE TABLE "markers_effects" (
 	"marker_id"	INTEGER NOT NULL,
 	"paper_id"	TEXT NOT NULL,
@@ -1421,10 +1424,6 @@ INSERT INTO "markers_effects" VALUES(207,'Chen L. et al., 2012','Increased virus
 INSERT INTO "markers_effects" VALUES(207,'Suttie A. et al., 2019','Increased virus binding to α2-6','H5N1',NULL,NULL);
 INSERT INTO "markers_effects" VALUES(208,'Chen L. et al., 2012','Increased virus binding to α2-6','H5N1',NULL,NULL);
 INSERT INTO "markers_effects" VALUES(208,'Suttie A. et al., 2019','Increased virus binding to α2-6','H5N1',NULL,NULL);
-INSERT INTO "markers_effects" VALUES(209,'Sorrell E. et al., 2009','Enhanced replication in ferrets','H3N2 (human isolate) backbone with H9N2 HA',NULL,NULL);
-INSERT INTO "markers_effects" VALUES(209,'Sorrell E. et al., 2009','Transmitted via aerosol among ferrets','H3N2 (human isolate) backbone with H9N2 HA',NULL,NULL);
-INSERT INTO "markers_effects" VALUES(209,'Suttie A. et al., 2019','Enhanced replication in ferrets','H3N2 (human isolate) backbone with H9N2 HA',NULL,NULL);
-INSERT INTO "markers_effects" VALUES(209,'Suttie A. et al., 2019','Transmitted via aerosol among ferrets','H3N2 (human isolate) backbone with H9N2 HA',NULL,NULL);
 INSERT INTO "markers_effects" VALUES(210,'Chen L. et al., 2012','Increased virus binding to α2-6','H5N1',NULL,NULL);
 INSERT INTO "markers_effects" VALUES(210,'Suttie A. et al., 2019','Increased virus binding to α2-6','H5N1',NULL,NULL);
 INSERT INTO "markers_effects" VALUES(211,'Stevens J. et al., 2008','Increased virus binding to α2-6','H5N1',NULL,NULL);
@@ -1607,10 +1606,6 @@ INSERT INTO "markers_effects" VALUES(243,'Boltz D. et al., 2010','Reduced suscep
 INSERT INTO "markers_effects" VALUES(243,'Suttie A. et al., 2019','Reduced susceptibility to Oseltamivir','H5N1',NULL,NULL);
 INSERT INTO "markers_effects" VALUES(244,'de Vries R. et al., 2017','Dual α2–3 and α2–6 binding','H7N9',NULL,NULL);
 INSERT INTO "markers_effects" VALUES(244,'Suttie A. et al., 2019','Dual α2–3 and α2–6 binding','H7N9',NULL,NULL);
-INSERT INTO "markers_effects" VALUES(245,'Sang X. et al., 2015b','Enhanced contact transmission in guinea pigs','H9N2',NULL,NULL);
-INSERT INTO "markers_effects" VALUES(245,'Suttie A. et al., 2019','Enhanced contact transmission in guinea pigs','H9N2',NULL,NULL);
-INSERT INTO "markers_effects" VALUES(246,'Sang X. et al., 2015b','Enhanced contact transmission in guinea pigs','H9N2',NULL,NULL);
-INSERT INTO "markers_effects" VALUES(246,'Suttie A. et al., 2019','Enhanced contact transmission in guinea pigs','H9N2',NULL,NULL);
 INSERT INTO "markers_effects" VALUES(247,'Huang W. et al., 2018','Reduced inhibition to Oseltamivir','H1N1',NULL,NULL);
 INSERT INTO "markers_effects" VALUES(247,'Huang W. et al., 2018','Reduced inhibition to Zanamiriv','H1N1',NULL,NULL);
 INSERT INTO "markers_effects" VALUES(247,'Lackenby A. et al., 2018','Reduced inhibition to Oseltamivir','H1N1',NULL,NULL);
@@ -2375,6 +2370,19 @@ INSERT INTO "markers_effects" VALUES(415,'Chan M. et al., 2020','Increased repli
 INSERT INTO "markers_effects" VALUES(416,'Choi E. et al., 2020','Increased replication in mammalian cells','H3N2',NULL,NULL);
 INSERT INTO "markers_effects" VALUES(416,'Choi E. et al., 2020','Increased viral replication in mice lungs','H3N2',NULL,NULL);
 INSERT INTO "markers_effects" VALUES(417,'Zhang C. et al., 2021','Transmitted via aerosol among guinea pigs','H7N9',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(418,'Good M. et al., 2024','Increased binding breadth to glycans bearing terminal α2-3 sialic acids','H5N1',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(246,'Sang X. et al., 2015b','Enhanced contact transmission in guinea pigs','H9N2',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(246,'Suttie A. et al., 2019','Enhanced contact transmission in guinea pigs','H9N2',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(209,'Sorrell E. et al., 2009','Enhanced replication in ferrets','H3N2 (human isolate) backbone with H9N2 HA',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(209,'Suttie A. et al., 2019','Enhanced replication in ferrets','H3N2 (human isolate) backbone with H9N2 HA',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(209,'Sorrell E. et al., 2009','Transmitted via aerosol among ferrets','H3N2 (human isolate) backbone with H9N2 HA',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(209,'Suttie A. et al., 2019','Transmitted via aerosol among ferrets','H3N2 (human isolate) backbone with H9N2 HA',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(245,'Sang X. et al., 2015b','Enhanced contact transmission in guinea pigs','H9N2',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(245,'Suttie A. et al., 2019','Enhanced contact transmission in guinea pigs','H9N2',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(419,'Zhang M. et al., 2025','Increased replication in avian cells','H5N1',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(419,'Zhang M. et al., 2025','Enhanced virulence in mice','H5N1',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(419,'Zhang M. et al., 2025','Enhanced replication in mammalian cells','H5N1',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(419,'Zhang M. et al., 2025','Enhanced replication in mice','H5N1',NULL,NULL);
 CREATE TABLE "markers_mutations" (
 	"marker_id"	INTEGER NOT NULL,
 	"mutation_name"	INTEGER NOT NULL,
@@ -2661,8 +2669,6 @@ INSERT INTO "markers_mutations" VALUES(207,'HA1-5:Q222L');
 INSERT INTO "markers_mutations" VALUES(207,'HA1-5:G224S');
 INSERT INTO "markers_mutations" VALUES(208,'HA1-5:D183G');
 INSERT INTO "markers_mutations" VALUES(208,'HA1-5:S223N');
-INSERT INTO "markers_mutations" VALUES(209,'HA1-5:T185A');
-INSERT INTO "markers_mutations" VALUES(209,'HA1-5:G188R');
 INSERT INTO "markers_mutations" VALUES(210,'HA1-5:E186G');
 INSERT INTO "markers_mutations" VALUES(210,'HA1-5:Q222E');
 INSERT INTO "markers_mutations" VALUES(210,'HA1-5:G224S');
@@ -2721,12 +2727,6 @@ INSERT INTO "markers_mutations" VALUES(243,'NA-1:I223L');
 INSERT INTO "markers_mutations" VALUES(243,'NA-1:S247N');
 INSERT INTO "markers_mutations" VALUES(244,'HA1-5:K189T');
 INSERT INTO "markers_mutations" VALUES(244,'HA1-5:G224S');
-INSERT INTO "markers_mutations" VALUES(245,'NP:E434K');
-INSERT INTO "markers_mutations" VALUES(245,'HA1-5:Q227P');
-INSERT INTO "markers_mutations" VALUES(245,'HA2-5:D46E');
-INSERT INTO "markers_mutations" VALUES(246,'NP:E434K');
-INSERT INTO "markers_mutations" VALUES(246,'HA1-5:Q227P');
-INSERT INTO "markers_mutations" VALUES(246,'PB2:D195N');
 INSERT INTO "markers_mutations" VALUES(247,'NA-1:S110F');
 INSERT INTO "markers_mutations" VALUES(249,'NA-1:I117V');
 INSERT INTO "markers_mutations" VALUES(250,'NA-1:I117R');
@@ -2931,6 +2931,16 @@ INSERT INTO "markers_mutations" VALUES(415,'PB2:M483K');
 INSERT INTO "markers_mutations" VALUES(416,'PB2:F323L');
 INSERT INTO "markers_mutations" VALUES(417,'PB1:H115Q');
 INSERT INTO "markers_mutations" VALUES(417,'PB2:E627K');
+INSERT INTO "markers_mutations" VALUES(418,'HA1-5:T195I');
+INSERT INTO "markers_mutations" VALUES(246,'NP:E434K');
+INSERT INTO "markers_mutations" VALUES(246,'HA1-5:Q223P');
+INSERT INTO "markers_mutations" VALUES(246,'PB2:D195N');
+INSERT INTO "markers_mutations" VALUES(209,'HA1-5:T185A');
+INSERT INTO "markers_mutations" VALUES(209,'HA2-5:G193R');
+INSERT INTO "markers_mutations" VALUES(245,'NP:E434K');
+INSERT INTO "markers_mutations" VALUES(245,'HA1-5:Q223P');
+INSERT INTO "markers_mutations" VALUES(245,'HA2-5:D46E');
+INSERT INTO "markers_mutations" VALUES(419,'PA:S225E');
 CREATE TABLE "mutation_mappings" (
 	"id"	INTEGER NOT NULL UNIQUE,
 	"mutation_name"	TEXT NOT NULL,
@@ -3136,7 +3146,6 @@ INSERT INTO "mutation_mappings" VALUES(192,'HA1-5:E183G','HA',183,'E','G');
 INSERT INTO "mutation_mappings" VALUES(193,'HA1-5:E186D','HA',186,'E','D');
 INSERT INTO "mutation_mappings" VALUES(194,'HA1-5:K189S','HA',189,'K','S');
 INSERT INTO "mutation_mappings" VALUES(195,'HA1-5:T185A','HA',185,'T','A');
-INSERT INTO "mutation_mappings" VALUES(196,'HA1-5:G188R','HA',188,'G','R');
 INSERT INTO "mutation_mappings" VALUES(197,'HA1-5:Q222E','HA',222,'Q','E');
 INSERT INTO "mutation_mappings" VALUES(198,'HA1-5:K218Q','HA',218,'K','Q');
 INSERT INTO "mutation_mappings" VALUES(199,'HA1-5:S223R','HA',223,'S','R');
@@ -3158,7 +3167,6 @@ INSERT INTO "mutation_mappings" VALUES(214,'NA-1:I314V','NA',314,'I','V');
 INSERT INTO "mutation_mappings" VALUES(215,'NA-1:I223L','NA',223,'I','L');
 INSERT INTO "mutation_mappings" VALUES(216,'NA-1:I223V','NA',223,'I','V');
 INSERT INTO "mutation_mappings" VALUES(217,'NA-1:K150N','NA',150,'K','N');
-INSERT INTO "mutation_mappings" VALUES(218,'HA1-5:Q227P','HA',227,'Q','P');
 INSERT INTO "mutation_mappings" VALUES(219,'HA2-5:D46E','HA',46,'D','E');
 INSERT INTO "mutation_mappings" VALUES(220,'PB2:D195N','PB2',195,'D','N');
 INSERT INTO "mutation_mappings" VALUES(221,'NA-1:S110F','NA',110,'S','F');
@@ -3268,6 +3276,10 @@ INSERT INTO "mutation_mappings" VALUES(333,'M1:R211Q','MP',211,'R','Q');
 INSERT INTO "mutation_mappings" VALUES(334,'PB2:M483K','PB2',483,'M','K');
 INSERT INTO "mutation_mappings" VALUES(335,'PB2:F323L','PB2',323,'F','L');
 INSERT INTO "mutation_mappings" VALUES(336,'PB1:H115Q','PB1',115,'H','Q');
+INSERT INTO "mutation_mappings" VALUES(337,'HA1-5:T195I','HA',195,'T','I');
+INSERT INTO "mutation_mappings" VALUES(342,'HA2-5:G193R','HA',193,'G','R');
+INSERT INTO "mutation_mappings" VALUES(345,'HA1-5:Q223P','HA',223,'Q','P');
+INSERT INTO "mutation_mappings" VALUES(346,'PA:S225E','PA',225,'S','E');
 CREATE TABLE "mutations" (
 	"name"	TEXT NOT NULL,
 	"type"	TEXT NOT NULL,
@@ -3469,7 +3481,7 @@ INSERT INTO "mutations" VALUES('HA1-5:E183G','SNP','HA1');
 INSERT INTO "mutations" VALUES('HA1-5:E186D','SNP','HA1');
 INSERT INTO "mutations" VALUES('HA1-5:K189S','SNP','HA1');
 INSERT INTO "mutations" VALUES('HA1-5:T185A','SNP','HA1');
-INSERT INTO "mutations" VALUES('HA1-5:G188R','SNP','HA1');
+INSERT INTO "mutations" VALUES('HA2-5:G193R','SNP','HA2');
 INSERT INTO "mutations" VALUES('HA1-5:Q222E','SNP','HA1');
 INSERT INTO "mutations" VALUES('HA1-5:K218Q','SNP','HA1');
 INSERT INTO "mutations" VALUES('HA1-5:S223R','SNP','HA1');
@@ -3491,7 +3503,7 @@ INSERT INTO "mutations" VALUES('NA-1:I314V','SNP','NA');
 INSERT INTO "mutations" VALUES('NA-1:I223L','SNP','NA');
 INSERT INTO "mutations" VALUES('NA-1:I223V','SNP','NA');
 INSERT INTO "mutations" VALUES('NA-1:K150N','SNP','NA');
-INSERT INTO "mutations" VALUES('HA1-5:Q227P','SNP','HA1');
+INSERT INTO "mutations" VALUES('HA1-5:Q223P','SNP','HA1');
 INSERT INTO "mutations" VALUES('HA2-5:D46E','SNP','HA2');
 INSERT INTO "mutations" VALUES('PB2:D195N','SNP','PB2');
 INSERT INTO "mutations" VALUES('NA-1:S110F','SNP','NA');
@@ -3602,6 +3614,8 @@ INSERT INTO "mutations" VALUES('M1:R211Q','SNP','M1');
 INSERT INTO "mutations" VALUES('PB2:M483K','SNP','PB2');
 INSERT INTO "mutations" VALUES('PB2:F323L','SNP','PB2');
 INSERT INTO "mutations" VALUES('PB1:H115Q','SNP','PB1');
+INSERT INTO "mutations" VALUES('HA1-5:T195I','SNP','HA1');
+INSERT INTO "mutations" VALUES('PA:S225E','SNP','PA');
 CREATE TABLE "papers" (
 	"id"	TEXT NOT NULL,
 	"title"	TEXT NOT NULL UNIQUE,
@@ -4077,6 +4091,9 @@ INSERT INTO "papers" VALUES('Sutton T. et al., 2014','Airborne Transmission of H
 INSERT INTO "papers" VALUES('Chan M. et al., 2020','H7N9 Influenza Virus Containing a Polybasic HA Cleavage Site Requires Minimal Host Adaptation to Obtain a Highly Pathogenic Disease Phenotype in Mice','Chan, Mable; Leung, Anders; Hisanaga, Tamiko; Pickering, Brad; Griffin, Bryan D.; Vendramelli, Robert; Tailor, Nikesh; Wong, Gary; Bi, Yuhai; Babiuk, Shawn; Berhane, Yohannes; Kobasa, Darwyn',2020,'Viruses','http://dx.doi.org/10.3390/v12010065','10.3390/v12010065');
 INSERT INTO "papers" VALUES('Choi E. et al., 2020','The effect of mutations derived from mouse-adapted H3N2 seasonal influenza A virus to pathogenicity and host adaptation','Choi, Eun-Ji; Lee, Young Jae; Lee, Jin-Moo; Kim, Yeon-Jung; Choi, Jang-Hoon; Ahn, Byeongwoo; Kim, Kisoon; Han, Myung Guk',2020,'PLOS ONE','http://dx.doi.org/10.1371/journal.pone.0227516','10.1371/journal.pone.0227516');
 INSERT INTO "papers" VALUES('Zhang C. et al., 2021','Risk of Environmental Exposure to H7N9 Influenza Virus via Airborne and Surface Routes in a Live Poultry Market in Hebei, China','Zhang, Cheng; Guo, Kangkang; Cui, Huan; Chen, Ligong; Zhang, Chunmao; Wang, Xuejing; Li, Jiaming; Fu, Yingying; Wang, Zhongyi; Guo, Zhendong; Liu, Juxiang; Dong, Shishan',2021,'Frontiers in Cellular and Infection Microbiology','http://dx.doi.org/10.3389/fcimb.2021.688007','10.3389/fcimb.2021.688007');
+INSERT INTO "papers" VALUES('Liang L. et al., 2019b','Low Polymerase Activity Attributed to PA Drives the Acquisition of the PB2 E627K Mutation of H7N9 Avian Influenza Virus in Mammals','Liang, Libin; Jiang, Li; Li, Junping; Zhao, Qingqing; Wang, Jinguang; He, Xijun; Huang, Shanyu; Wang, Qian; Zhao, Yuhui; Wang, Guangwen; Sun, Nan; Deng, Guohua; Shi, Jianzhong; Tian, Guobin; Zeng, Xianying; Jiang, Yongping; Liu, Liling; Liu, Jinxiong; Chen, Pucheng; Bu, Zhigao; Kawaoka, Yoshihiro; Chen, Hualan; Li, Chengjun',2019,'mBio','http://dx.doi.org/10.1128/mBio.01162-19','10.1128/mBio.01162-19');
+INSERT INTO "papers" VALUES('Good M. et al., 2024','A single mutation in dairy cow-associated H5N1 viruses increases receptor binding breadth','Good, Marina R.; Ji, Wei; Fernández-Quintero, Monica L.; Ward, Andrew B.; Guthmiller, Jenna J.',2024,'','http://dx.doi.org/10.1101/2024.06.22.600211','10.1101/2024.06.22.600211');
+INSERT INTO "papers" VALUES('Zhang M. et al., 2025','Phosphorylation of PA at serine 225 enhances viral fitness of the highly pathogenic H5N1 avian influenza virus in mice','Zhang, Manyu; Zeng, Zixiong; Chen, Xia; Wang, Guoqing; Cai, Xinxin; Hu, Zenglei; Gu, Min; Hu, Shunlin; Liu, Xiaowen; Wang, Xiaoquan; Peng, Daxin; Hu, Jiao; Liu, Xiufan',2025,'Veterinary Microbiology','http://dx.doi.org/10.1016/j.vetmic.2025.110400','10.1016/j.vetmic.2025.110400');
 CREATE TABLE "proteins" (
 	"name"	TEXT NOT NULL,
 	"segment_name"	TEXT NOT NULL,
@@ -4130,6 +4147,6 @@ CREATE VIEW markers_summary AS
 FROM markers_mutations 
 GROUP BY markers_mutations.marker_id;
 DELETE FROM "sqlite_sequence";
-INSERT INTO "sqlite_sequence" VALUES('markers',417);
-INSERT INTO "sqlite_sequence" VALUES('mutation_mappings',336);
+INSERT INTO "sqlite_sequence" VALUES('markers',419);
+INSERT INTO "sqlite_sequence" VALUES('mutation_mappings',346);
 COMMIT;
