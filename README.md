@@ -18,9 +18,16 @@ You can find a complete list of all markers in [FluMut documentation](https://iz
 To suggest us a new marker, open an [issue](https://github.com/izsvenezie-virology/FluMutDB/issues/new?assignees=&labels=&projects=&template=new-marker-request.md&title=).
 
 In the issue you should report:
+
 - the paper where the marker is described
 - the mutations composing the marker
 - the effect reported in the literature
+
+## Cite FluMutDB
+
+If you use FluMutDB, please cite:
+
+> Giussani, E., Sartori, A. et al. (2025). FluMut: a tool for mutation surveillance in highly pathogenic H5N1 genomes. Virus Evolution, [10.1093/ve/veaf011](https://doi.org/10.1093/ve/veaf011).
 
 # Fundings
 
@@ -33,5 +40,5 @@ This work was partially supported by the FLU-SWITCH Era-Net ICRAD (grant agreeme
     <img style="height:80px;margin:8px" alt="Logo supporter, KAPPA-FLU" src=".github/images/logo-kappa-flu.jpg"/>
 </p>
 
->Views and opinions expressed are however those of the author(s) only and do not necessarily reflect those of the European Union or the European Health and Digital Executive Agency (HEDEA). 
->Neither the European Union nor the granting authority can be held responsible for them.
+> Views and opinions expressed are however those of the author(s) only and do not necessarily reflect those of the European Union or the European Health and Digital Executive Agency (HEDEA).
+> Neither the European Union nor the granting authority can be held responsible for them.
