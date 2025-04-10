@@ -2385,7 +2385,7 @@ INSERT INTO "markers_effects" VALUES(419,'Zhang M. et al., 2025','Enhanced repli
 INSERT INTO "markers_effects" VALUES(419,'Zhang M. et al., 2025','Enhanced replication in mice','H5N1',NULL,NULL);
 CREATE TABLE "markers_mutations" (
 	"marker_id"	INTEGER NOT NULL,
-	"mutation_name"	INTEGER NOT NULL,
+	"mutation_name"	TEXT NOT NULL,
 	FOREIGN KEY("marker_id") REFERENCES "markers"("id") ON UPDATE CASCADE,
 	FOREIGN KEY("mutation_name") REFERENCES "mutations"("name") ON UPDATE CASCADE
 );
@@ -4140,11 +4140,16 @@ INSERT INTO "segments" VALUES('PA');
 INSERT INTO "segments" VALUES('NP');
 INSERT INTO "segments" VALUES('NS');
 INSERT INTO "segments" VALUES('MP');
-CREATE VIEW markers_summary AS
-  SELECT markers_mutations.marker_id,
-      group_concat(markers_mutations.mutation_name) AS all_mutations,
-      count(markers_mutations.mutation_name) as all_mutations_count
-FROM markers_mutations 
+CREATE VIEW markers_summary AS
+
+  SELECT markers_mutations.marker_id,
+
+      group_concat(markers_mutations.mutation_name) AS all_mutations,
+
+      count(markers_mutations.mutation_name) as all_mutations_count
+
+FROM markers_mutations 
+
 GROUP BY markers_mutations.marker_id;
 DELETE FROM "sqlite_sequence";
 INSERT INTO "sqlite_sequence" VALUES('markers',419);
