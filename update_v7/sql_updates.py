@@ -66,15 +66,15 @@ print("UPDATE segments SET number = 7 WHERE name == 'NS';")
 print("UPDATE segments SET number = 8 WHERE name == 'MP';")
 
 # Add sequence id column to track references origin
-print("ALTER TABLE references ADD COLUMN sequence_id TEXT;")
-print("UPDATE references SET sequence_id = 'EPI2414998' WHERE name == 'PB2';")
-print("UPDATE references SET sequence_id = 'EPI2414999' WHERE name == 'PB1';")
-print("UPDATE references SET sequence_id = 'EPI2414997' WHERE name == 'PA';")
-print("UPDATE references SET sequence_id = 'EPI2415001' WHERE name == 'HA';")
-print("UPDATE references SET sequence_id = 'EPI2415015' WHERE name == 'NP';")
-print("UPDATE references SET sequence_id = 'EPI2415000' WHERE name == 'NA';")
-print("UPDATE references SET sequence_id = 'EPI2414996' WHERE name == 'MP';")
-print("UPDATE references SET sequence_id = 'EPI2414995' WHERE name == 'NS';")
+print("ALTER TABLE 'references' ADD COLUMN sequence_id TEXT;")
+print("UPDATE 'references' SET sequence_id = 'EPI2414998' WHERE name == 'PB2';")
+print("UPDATE 'references' SET sequence_id = 'EPI2414999' WHERE name == 'PB1';")
+print("UPDATE 'references' SET sequence_id = 'EPI2414997' WHERE name == 'PA';")
+print("UPDATE 'references' SET sequence_id = 'EPI2415001' WHERE name == 'HA';")
+print("UPDATE 'references' SET sequence_id = 'EPI2415015' WHERE name == 'NP';")
+print("UPDATE 'references' SET sequence_id = 'EPI2415000' WHERE name == 'NA';")
+print("UPDATE 'references' SET sequence_id = 'EPI2414996' WHERE name == 'MP';")
+print("UPDATE 'references' SET sequence_id = 'EPI2414995' WHERE name == 'NS';")
 
 # Remove unused view
 print("DROP VIEW markers_summary;")
@@ -142,6 +142,11 @@ print("UPDATE mutations SET name = replace(name, 'HA2-5', 'HA2');")
 print("UPDATE mutations SET name = replace(name, 'NA-1', 'NA');")
 print("UPDATE mutations SET name = replace(name, 'NS-1', 'NS1');")
 print("UPDATE mutations SET name = replace(name, 'NS-2', 'NS2');")
+
+# Uniforming proteins name
+print("UPDATE proteins SET name = 'NS1' WHERE name = 'NS-1';")
+print("UPDATE proteins SET name = 'NS2' WHERE name = 'NS-2';")
+
 
 # Rename mutations with pattern PROT:POSAA
 print(
