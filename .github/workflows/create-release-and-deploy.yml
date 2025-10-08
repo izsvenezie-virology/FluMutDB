@@ -81,8 +81,8 @@ jobs:
     steps:
       - name: variables
         run: |
-          repo_owner="izsvenezie-virology" 
-          repo_name="FluMut"  
+          repo_owner="izsvenezie-virology"
+          repo_name="FluMut"
           event_type="trigger-update-markers"
 
           curl -L \
