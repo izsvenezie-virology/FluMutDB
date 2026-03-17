@@ -29,7 +29,7 @@ CREATE TABLE "db_version" (
 	"minor"	INTEGER NOT NULL UNIQUE,
 	"date"	TEXT NOT NULL UNIQUE
 );
-INSERT INTO "db_version" VALUES(6,5,'2025-10-08');
+INSERT INTO "db_version" VALUES(6,6,'2026-03-17');
 CREATE TABLE "effects" (
 	"name"	TEXT NOT NULL,
 	PRIMARY KEY("name")
@@ -144,6 +144,8 @@ INSERT INTO "effects" VALUES('Contact transmission in ferrets');
 INSERT INTO "effects" VALUES('Prevents airborne transmission in ferrets');
 INSERT INTO "effects" VALUES('Increased binding breadth to glycans bearing terminal α2-3 sialic acids');
 INSERT INTO "effects" VALUES('Enhanced pathology in mice lungs');
+INSERT INTO "effects" VALUES('Confer airborne transmission in ferret');
+INSERT INTO "effects" VALUES('Increased translation efficiency of viral mRNA in human cells');
 CREATE TABLE "markers" (
 	"id"	INTEGER NOT NULL,
 	"notes"	TEXT,
@@ -490,6 +492,12 @@ INSERT INTO "markers" VALUES(417,'');
 INSERT INTO "markers" VALUES(418,'H3 numbering: 199');
 INSERT INTO "markers" VALUES(419,'');
 INSERT INTO "markers" VALUES(420,'H3 numbering:190;225');
+INSERT INTO "markers" VALUES(421,'');
+INSERT INTO "markers" VALUES(422,'');
+INSERT INTO "markers" VALUES(424,'');
+INSERT INTO "markers" VALUES(425,'');
+INSERT INTO "markers" VALUES(426,'');
+INSERT INTO "markers" VALUES(427,'');
 CREATE TABLE "markers_effects" (
 	"marker_id"	INTEGER NOT NULL,
 	"paper_id"	TEXT NOT NULL,
@@ -1982,7 +1990,6 @@ INSERT INTO "markers_effects" VALUES(349,'Omoto S. et al., 2018','PA inhibitor (
 INSERT INTO "markers_effects" VALUES(350,'Takizawa N. et al., 2022','PA inhibitor (PAI) baloxavir susceptibility','A(H1N1)pdm09',NULL,NULL);
 INSERT INTO "markers_effects" VALUES(352,'Kiso M. et al., 2020','PA inhibitor (PAI) baloxavir susceptibility','A(H1N1)pdm09',NULL,NULL);
 INSERT INTO "markers_effects" VALUES(353,'Hickerson B. et al., 2022','PA inhibitor (PAI) baloxavir susceptibility','A(H1N1)pdm09',NULL,NULL);
-INSERT INTO "markers_effects" VALUES(354,'Pinto R. et al., 2023','Evade human BTN3A3 (inhibitor of avian influenza A viruses replication)','Unknown',NULL,NULL);
 INSERT INTO "markers_effects" VALUES(355,'Pinto R. et al., 2023','Evade human BTN3A3 (inhibitor of avian influenza A viruses replication)','Unknown',NULL,NULL);
 INSERT INTO "markers_effects" VALUES(356,'Pinto R. et al., 2023','Evade human BTN3A3 (inhibitor of avian influenza A viruses replication)','Unknown',NULL,NULL);
 INSERT INTO "markers_effects" VALUES(361,'Lee J. et al., 2008','Conferred Amantidine resistance','Unknown',NULL,NULL);
@@ -2031,32 +2038,6 @@ INSERT INTO "markers_effects" VALUES(396,'Zhang J. et al., 2023','Increased vira
 INSERT INTO "markers_effects" VALUES(159,'Suttie A. et al., 2019','Increased virus binding to α2-6','H6N1',NULL,NULL);
 INSERT INTO "markers_effects" VALUES(159,'Vries R. et al., 2017','Increased virus binding to α2-6','H6N1',NULL,NULL);
 INSERT INTO "markers_effects" VALUES(159,'AbuBakar U. et al., 2023','Increased virus binding to α2-6','H1N1',0,1);
-INSERT INTO "markers_effects" VALUES(169,'Chutinimitkul S. et al., 2010','Increased virus binding to α2-6','H5N1',NULL,NULL);
-INSERT INTO "markers_effects" VALUES(169,'Qu Z. et al., 2017','Decreased virus binding to α2-3','H6N2',NULL,NULL);
-INSERT INTO "markers_effects" VALUES(169,'Sang X. et al., 2015b','Decreased virus binding to α2-3','H10N8 (human isolate)',NULL,NULL);
-INSERT INTO "markers_effects" VALUES(169,'Sang X. et al., 2015b','No binding to α2–6','H10N8 (human isolate)',NULL,NULL);
-INSERT INTO "markers_effects" VALUES(169,'Song H. et al., 2017','Dual receptor specificity','H4N6',NULL,NULL);
-INSERT INTO "markers_effects" VALUES(169,'Song H. et al., 2017','Increased virus binding to α2-6','H4N6',NULL,NULL);
-INSERT INTO "markers_effects" VALUES(169,'Stevens J. et al., 2006','Increased virus binding to α2-6','H5N1',NULL,NULL);
-INSERT INTO "markers_effects" VALUES(169,'Suttie A. et al., 2019','Decreased virus binding to α2-3','H10N8 (human isolate)',NULL,NULL);
-INSERT INTO "markers_effects" VALUES(169,'Suttie A. et al., 2019','Decreased virus binding to α2-3','H6N2',NULL,NULL);
-INSERT INTO "markers_effects" VALUES(169,'Suttie A. et al., 2019','Decreased virus binding to α2-3','H7N9',NULL,NULL);
-INSERT INTO "markers_effects" VALUES(169,'Suttie A. et al., 2019','Decreased virus binding to α2-6','H7N9',NULL,NULL);
-INSERT INTO "markers_effects" VALUES(169,'Suttie A. et al., 2019','Dual receptor specificity','H4N6',NULL,NULL);
-INSERT INTO "markers_effects" VALUES(169,'Suttie A. et al., 2019','Increased replication in mammalian cells','H1N2',NULL,NULL);
-INSERT INTO "markers_effects" VALUES(169,'Suttie A. et al., 2019','Increased virulence in mice','H1N2',NULL,NULL);
-INSERT INTO "markers_effects" VALUES(169,'Suttie A. et al., 2019','Increased virus binding to α2-6','H4N6',NULL,NULL);
-INSERT INTO "markers_effects" VALUES(169,'Suttie A. et al., 2019','Increased virus binding to α2-6','H5N1',NULL,NULL);
-INSERT INTO "markers_effects" VALUES(169,'Suttie A. et al., 2019','No binding to α2–6','H10N8 (human isolate)',NULL,NULL);
-INSERT INTO "markers_effects" VALUES(169,'Wang F. et al., 2015','Increased virus binding to α2-6','H5N1',NULL,NULL);
-INSERT INTO "markers_effects" VALUES(169,'Wang W. et al., 2010','Increased virus binding to α2-6','H5N1',NULL,NULL);
-INSERT INTO "markers_effects" VALUES(169,'Yu Z. et al., 2019','Increased replication in mammalian cells','H1N2',NULL,NULL);
-INSERT INTO "markers_effects" VALUES(169,'Yu Z. et al., 2019','Increased virulence in mice','H1N2',NULL,NULL);
-INSERT INTO "markers_effects" VALUES(169,'Zhang H. et al., 2015','Decreased virus binding to α2-3','H10N8 (human isolate)',NULL,NULL);
-INSERT INTO "markers_effects" VALUES(169,'Zhang H. et al., 2015','No binding to α2–6','H10N8 (human isolate)',NULL,NULL);
-INSERT INTO "markers_effects" VALUES(169,'de Vries R. et al., 2017','Decreased virus binding to α2-3','H7N9',NULL,NULL);
-INSERT INTO "markers_effects" VALUES(169,'de Vries R. et al., 2017','Decreased virus binding to α2-6','H7N9',NULL,NULL);
-INSERT INTO "markers_effects" VALUES(169,'Sun H. et al., 2017','Increased virus binding to α2-6','H6N6',1,1);
 INSERT INTO "markers_effects" VALUES(397,'Tan L. et al., 2014','Increased virulence in mice','H6N6',1,0);
 INSERT INTO "markers_effects" VALUES(398,'Lyashko A. et al., 2023','Decreased virulence in mice','H7N2',1,0);
 INSERT INTO "markers_effects" VALUES(398,'Lyashko A. et al., 2023','Increased virus binding to α2-6','H7N2',0,1);
@@ -2397,6 +2378,41 @@ INSERT INTO "markers_effects" VALUES(73,'Guo Y. et al., 2025','Increased viral r
 INSERT INTO "markers_effects" VALUES(73,'Guo Y. et al., 2025','Increased viral replication in mice lungs','H3N8',NULL,NULL);
 INSERT INTO "markers_effects" VALUES(73,'Guo Y. et al., 2025','Enhanced pathology in mice lungs','H7N9',NULL,NULL);
 INSERT INTO "markers_effects" VALUES(73,'Guo Y. et al., 2025','Enhanced pathology in mice lungs','H3N8',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(354,'Pinto R. et al., 2023','Evade human BTN3A3 (inhibitor of avian influenza A viruses replication)','H7N9',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(421,'Pinto R. et al., 2023','Evade human BTN3A3 (inhibitor of avian influenza A viruses replication)','H7N9',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(421,'Pinto R. et al., 2023','Evade human BTN3A3 (inhibitor of avian influenza A viruses replication)','H9N2',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(422,'Bussey K. et al., 2011','Enhanced pathogenicity in mice','H1N1',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(169,'Chutinimitkul S. et al., 2010','Increased virus binding to α2-6','H5N1',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(169,'Stevens J. et al., 2006','Increased virus binding to α2-6','H5N1',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(169,'Suttie A. et al., 2019','Increased virus binding to α2-6','H5N1',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(169,'Wang F. et al., 2015','Increased virus binding to α2-6','H5N1',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(169,'Wang W. et al., 2010','Increased virus binding to α2-6','H5N1',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(169,'Song H. et al., 2017','Increased virus binding to α2-6','H4N6',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(169,'Suttie A. et al., 2019','Increased virus binding to α2-6','H4N6',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(169,'Sun H. et al., 2017','Increased virus binding to α2-6','H6N6',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(169,'Sun H. et al., 2023','Increased virus binding to α2-6','H3N8',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(169,'Suttie A. et al., 2019','Decreased virus binding to α2-6','H7N9',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(169,'de Vries R. et al., 2017','Decreased virus binding to α2-6','H7N9',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(169,'Sang X. et al., 2015b','No binding to α2–6','H10N8 (human isolate)',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(169,'Suttie A. et al., 2019','No binding to α2–6','H10N8 (human isolate)',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(169,'Zhang H. et al., 2015','No binding to α2–6','H10N8 (human isolate)',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(169,'Qu Z. et al., 2017','Decreased virus binding to α2-3','H6N2',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(169,'Suttie A. et al., 2019','Decreased virus binding to α2-3','H6N2',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(169,'Suttie A. et al., 2019','Decreased virus binding to α2-3','H7N9',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(169,'de Vries R. et al., 2017','Decreased virus binding to α2-3','H7N9',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(169,'Sang X. et al., 2015b','Decreased virus binding to α2-3','H10N8 (human isolate)',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(169,'Suttie A. et al., 2019','Decreased virus binding to α2-3','H10N8 (human isolate)',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(169,'Zhang H. et al., 2015','Decreased virus binding to α2-3','H10N8 (human isolate)',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(169,'Suttie A. et al., 2019','Increased virulence in mice','H1N2',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(169,'Yu Z. et al., 2019','Increased virulence in mice','H1N2',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(169,'Song H. et al., 2017','Dual receptor specificity','H4N6',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(169,'Suttie A. et al., 2019','Dual receptor specificity','H4N6',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(169,'Suttie A. et al., 2019','Increased replication in mammalian cells','H1N2',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(169,'Yu Z. et al., 2019','Increased replication in mammalian cells','H1N2',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(424,'Sun H. et al., 2023','Confer airborne transmission in ferret','H3N8',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(425,'Mehle A. et al., 2012','Increased polymerase activity in mammalian cells','H1N1',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(427,'Bussey K. et al., 2011','Increased polymerase activity in mammalian cells','H1N1',NULL,NULL);
+INSERT INTO "markers_effects" VALUES(426,'Lutz M. et al., 2022','Increased translation efficiency of viral mRNA in human cells','H1N1',NULL,NULL);
 CREATE TABLE "markers_mutations" (
 	"marker_id"	INTEGER NOT NULL,
 	"mutation_name"	TEXT NOT NULL,
@@ -2837,7 +2853,6 @@ INSERT INTO "markers_mutations" VALUES(349,'PA:E119D');
 INSERT INTO "markers_mutations" VALUES(350,'PA:E198K');
 INSERT INTO "markers_mutations" VALUES(352,'PA:E199G');
 INSERT INTO "markers_mutations" VALUES(353,'PA:E199D');
-INSERT INTO "markers_mutations" VALUES(354,'NP:Y52N');
 INSERT INTO "markers_mutations" VALUES(355,'NP:F313Y');
 INSERT INTO "markers_mutations" VALUES(356,'NP:F313V');
 INSERT INTO "markers_mutations" VALUES(357,'NA-1:S364N');
@@ -2899,7 +2914,6 @@ INSERT INTO "markers_mutations" VALUES(395,'HA1-5:A223E');
 INSERT INTO "markers_mutations" VALUES(395,'NS-1:A53D');
 INSERT INTO "markers_mutations" VALUES(396,'HA1-5:I208T');
 INSERT INTO "markers_mutations" VALUES(159,'HA1-5:G221D');
-INSERT INTO "markers_mutations" VALUES(169,'HA1-5:G224S');
 INSERT INTO "markers_mutations" VALUES(397,'HA1-5:H152N');
 INSERT INTO "markers_mutations" VALUES(397,'HA1-5:S260R');
 INSERT INTO "markers_mutations" VALUES(397,'PA:I38M');
@@ -2957,6 +2971,16 @@ INSERT INTO "markers_mutations" VALUES(419,'PA:S225E');
 INSERT INTO "markers_mutations" VALUES(420,'HA1-5:E186D');
 INSERT INTO "markers_mutations" VALUES(420,'HA1-5:G221D');
 INSERT INTO "markers_mutations" VALUES(73,'PB2:E627V');
+INSERT INTO "markers_mutations" VALUES(354,'NP:Y52N');
+INSERT INTO "markers_mutations" VALUES(421,'NP:Y52H');
+INSERT INTO "markers_mutations" VALUES(422,'PA:L336M');
+INSERT INTO "markers_mutations" VALUES(169,'HA1-5:G224S');
+INSERT INTO "markers_mutations" VALUES(424,'HA1-5:G224S');
+INSERT INTO "markers_mutations" VALUES(424,'PB2:E627K');
+INSERT INTO "markers_mutations" VALUES(425,'PA:T552S');
+INSERT INTO "markers_mutations" VALUES(427,'PA:T85I');
+INSERT INTO "markers_mutations" VALUES(426,'PA:G186S');
+INSERT INTO "markers_mutations" VALUES(426,'PA:T85I');
 CREATE TABLE "mutation_mappings" (
 	"id"	INTEGER NOT NULL UNIQUE,
 	"mutation_name"	TEXT NOT NULL,
@@ -3296,6 +3320,11 @@ INSERT INTO "mutation_mappings" VALUES(337,'HA1-5:T195I','HA',195,'T','I');
 INSERT INTO "mutation_mappings" VALUES(342,'HA2-5:G193R','HA',193,'G','R');
 INSERT INTO "mutation_mappings" VALUES(345,'HA1-5:Q223P','HA',223,'Q','P');
 INSERT INTO "mutation_mappings" VALUES(346,'PA:S225E','PA',225,'S','E');
+INSERT INTO "mutation_mappings" VALUES(347,'NP:Y52H','NP',52,'Y','H');
+INSERT INTO "mutation_mappings" VALUES(348,'PA:L336M','PA',336,'L','M');
+INSERT INTO "mutation_mappings" VALUES(349,'PA:T85I','PA',85,'T','I');
+INSERT INTO "mutation_mappings" VALUES(350,'PA:G186S','PA',186,'G','S');
+INSERT INTO "mutation_mappings" VALUES(351,'PA:T552S','PA',552,'T','S');
 CREATE TABLE "mutations" (
 	"name"	TEXT NOT NULL,
 	"type"	TEXT NOT NULL,
@@ -3632,6 +3661,11 @@ INSERT INTO "mutations" VALUES('PB2:F323L','SNP','PB2');
 INSERT INTO "mutations" VALUES('PB1:H115Q','SNP','PB1');
 INSERT INTO "mutations" VALUES('HA1-5:T195I','SNP','HA1');
 INSERT INTO "mutations" VALUES('PA:S225E','SNP','PA');
+INSERT INTO "mutations" VALUES('NP:Y52H','SNP','NP');
+INSERT INTO "mutations" VALUES('PA:L336M','SNP','PA');
+INSERT INTO "mutations" VALUES('PA:T85I','SNP','PA');
+INSERT INTO "mutations" VALUES('PA:G186S','SNP','PA');
+INSERT INTO "mutations" VALUES('PA:T552S','SNP','PA');
 CREATE TABLE "papers" (
 	"id"	TEXT NOT NULL,
 	"title"	TEXT NOT NULL UNIQUE,
@@ -4112,6 +4146,10 @@ INSERT INTO "papers" VALUES('Good M. et al., 2024','A single mutation in dairy c
 INSERT INTO "papers" VALUES('Zhang M. et al., 2025','Phosphorylation of PA at serine 225 enhances viral fitness of the highly pathogenic H5N1 avian influenza virus in mice','Zhang, Manyu; Zeng, Zixiong; Chen, Xia; Wang, Guoqing; Cai, Xinxin; Hu, Zenglei; Gu, Min; Hu, Shunlin; Liu, Xiaowen; Wang, Xiaoquan; Peng, Daxin; Hu, Jiao; Liu, Xiufan',2025,'Veterinary Microbiology','http://dx.doi.org/10.1016/j.vetmic.2025.110400','10.1016/j.vetmic.2025.110400');
 INSERT INTO "papers" VALUES('Stevens J. et al., 2006b','Structure and Receptor Specificity of the Hemagglutinin from an H5N1 Influenza Virus','Stevens, James; Blixt, Ola; Tumpey, Terrence M.; Taubenberger, Jeffery K.; Paulson, James C.; Wilson, Ian A.',2006,'Science','http://dx.doi.org/10.1126/science.1124513','10.1126/science.1124513');
 INSERT INTO "papers" VALUES('Guo Y. et al., 2025','An emerging PB2-627 polymorphism increases the zoonotic risk of avian influenza virus by overcoming ANP32 host restriction in mammalian and avian hosts','Guo, Yuxin; Shu, Sicheng; Zhou, Yong; Peng, Wenjing; Jiang, Zhimin; Li, Yudong; Li, Tian; Du, Fanshu; Wang, Linlin; Chen, Xue; Dong, Jinze; Zhao, Chuankuo; Haitian Wang, Maggie; Sun, Yipeng; Sun, Honglei; Lu, Lu; Digard, Paul; Chang, Kin-Chow; Yen, Hui-Ling; Liu, Jinhua; Pu, Juan',2025,'Journal of Virology','http://dx.doi.org/10.1128/jvi.00853-25','10.1128/jvi.00853-25');
+INSERT INTO "papers" VALUES('Bussey K. et al., 2011','PA Residues in the 2009 H1N1 Pandemic Influenza Virus Enhance Avian Influenza Virus Polymerase Activity in Mammalian Cells','Bussey, Kendra A.; Desmet, Emily A.; Mattiacio, Jonelle L.; Hamilton, Alice; Bradel-Tretheway, Birgit; Bussey, Howard E.; Kim, Baek; Dewhurst, Stephen; Takimoto, Toru',2011,'Journal of Virology','http://dx.doi.org/10.1128/jvi.00522-11','10.1128/jvi.00522-11');
+INSERT INTO "papers" VALUES('Sun H. et al., 2023','Airborne transmission of human-isolated avian H3N8 influenza virus between ferrets','Sun, Honglei; Li, Han; Tong, Qi; Han, Qiqi; Liu, Jiyu; Yu, Haili; Song, Hao; Qi, Jianxun; Li, Jiaqi; Yang, Jizhe; Lan, Riguo; Deng, Guojing; Chang, Haoyu; Qu, Yajin; Pu, Juan; Sun, Yipeng; Lan, Yu; Wang, Dayan; Shi, Yi; Liu, William J.; Chang, Kin-Chow; Gao, George F.; Liu, Jinhua',2023,'Cell','http://dx.doi.org/10.1016/j.cell.2023.08.011','10.1016/j.cell.2023.08.011');
+INSERT INTO "papers" VALUES('Lutz M. et al., 2022','Host adaptive mutations in the 2009 H1N1 pandemic influenza A virus PA gene regulate translation efficiency of viral mRNAs via GRSF1','Lutz, Michael; Schmierer, Jordana; Takimoto, Toru',2022,'Communications Biology','http://dx.doi.org/10.1038/s42003-022-04082-5','10.1038/s42003-022-04082-5');
+INSERT INTO "papers" VALUES('Mehle A. et al., 2012','Reassortment and Mutation of the Avian Influenza Virus Polymerase PA Subunit Overcome Species Barriers','Mehle, Andrew; Dugan, Vivien G.; Taubenberger, Jeffery K.; Doudna, Jennifer A.',2012,'Journal of Virology','http://dx.doi.org/10.1128/jvi.06203-11','10.1128/jvi.06203-11');
 CREATE TABLE "proteins" (
 	"name"	TEXT NOT NULL,
 	"segment_name"	TEXT NOT NULL,
@@ -4170,6 +4208,6 @@ FROM markers_mutations
 
 GROUP BY markers_mutations.marker_id;
 DELETE FROM "sqlite_sequence";
-INSERT INTO "sqlite_sequence" VALUES('markers',420);
-INSERT INTO "sqlite_sequence" VALUES('mutation_mappings',346);
+INSERT INTO "sqlite_sequence" VALUES('markers',427);
+INSERT INTO "sqlite_sequence" VALUES('mutation_mappings',351);
 COMMIT;
