@@ -1,0 +1,22 @@
+version = 1
+revision = 2
+requires-python = ">=3.7"
+
+[[package]]
+name = "flumutdb"
+source = { editable = "." }
+dependencies = [
+    { name = "peewee" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "peewee", specifier = ">=4.0.3" }]
+
+[[package]]
+name = "peewee"
+version = "4.0.3"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/20/50/1c269015e71612a6794cfccebced95561c8addf993075de61618f32db3b4/peewee-4.0.3.tar.gz", hash = "sha256:a3062505505e12cdf386066cda43d93a98f38a995dd9664cac0534378b2f6d1e", size = 717971, upload-time = "2026-03-26T22:41:50.992Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/2d/31/93950b2c7145ea10aa454397ffa308c9aadc98dcb4103b676396571bfadd/peewee-4.0.3-py3-none-any.whl", hash = "sha256:4bc50ccdd95bf3fb79957a79ec51e5d1f8f8cab238031f0d0bb14cb8694a2525", size = 144477, upload-time = "2026-03-26T22:41:49.453Z" },
+]

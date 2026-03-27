@@ -1,38 +1,41 @@
 [build-system]
-requires = ["setuptools>=61.2"]
 build-backend = "setuptools.build_meta"
+requires = ["setuptools>=61.2"]
 
 [project]
-name = "flumutdb"
-description = "Utility module for FluMut database"
-requires-python = ">=3.7"
 authors = [
-    {name = "Edoardo Giussani", email = "egiussani@izsvenezie.it"},
-    {name = "Alessandro Sartori", email = "asartori@izsvenezie.it"},
+  {name = "Edoardo Giussani", email = "egiussani@izsvenezie.it"},
+  {name = "Alessandro Sartori", email = "asartori@izsvenezie.it"},
 ]
+dependencies = [
+  "peewee>=4.0.3",
+]
+description = "A database of influenza virus markers and their effects on antigenicity and drug resistance."
 dynamic = ["version"]
+name = "flumutdb"
+requires-python = ">=3.7"
 
 [project.readme]
-file = "README.md"
 content-type = "text/markdown"
+file = "README.md"
 
 [project.license]
+content-type = "text/plain"
 file = "LICENSE"
-content-type = "text-markdown"
 
 [project.urls]
 Home-page = "https://github.com/izsvenezie-virology/FluMutDb"
 
 [tool.setuptools]
-package-dir = {"" = "src"}
 include-package-data = true
+package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
-where = ["src"]
 namespaces = true
+where = ["src"]
 
 [tool.setuptools.package-data]
 flumutdb = ["*"]
 
 [tool.setuptools.dynamic]
-version = {file= ["version.txt"]}
+version = {attr = "flumutdb.__version__"}
