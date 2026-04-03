@@ -82,7 +82,7 @@ print("DROP VIEW markers_summary;")
 
 ##### CLEAN DATA #####
 
-# Remove NA-1:D199G (wrong mutation, coreccted one is NA-1:D199G)
+# Remove NA-5:D199G (wrong mutation, coreccted one is NA-1:D199G)
 print("DELETE FROM mutations WHERE name = 'NA-5:D199G';")
 
 

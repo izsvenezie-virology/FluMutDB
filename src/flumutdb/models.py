@@ -1,40 +1,43 @@
 from __future__ import annotations
 
+from enum import Enum
 from typing import List
 
 from peewee import (
-    AutoField,
     CharField,
-    CompositeKey,
     DatabaseProxy,
     ForeignKeyField,
     IntegerField,
+    ManyToManyField,
     Model,
     TextField,
     prefetch,
 )
+
+from flumutdb.exceptions import IncompatibleVersionError, MissingVersionError
 
 REQUIRED_MAJOR_VERSION = 7
 
 database_proxy = DatabaseProxy()
 
 
+class MutationType(Enum):
+    SNP = "SNP"
+
+
 class BaseModel(Model):
-    pass
+    notes = TextField(null=True)
 
 
 BaseModel._meta.database = database_proxy  # type: ignore[attr-defined]
 
 
 class Segment(BaseModel):
-    _cache: list[Segment] = []
-    name = CharField(primary_key=True)
-    number = IntegerField(null=True)
-    references: list[Reference]
+    name = CharField()
     proteins: list[Protein]
+    references: list[Reference]
 
-    class Meta:
-        table_name = "segments"
+    _cache: list[Segment] = []
 
     @staticmethod
     def load(force_reload: bool = False) -> list[Segment]:
@@ -51,111 +54,71 @@ class Segment(BaseModel):
                     Protein.select(),
                     Annotation.select(),
                     Mutation.select(),
-                    MutationMapping.select(),
+                    Mapping.select(),
                 )
             )
         return Segment._cache
 
 
-class Reference(BaseModel):
-    name = CharField(primary_key=True)
-    segment = ForeignKeyField(Segment, column_name="segment_name", backref="references")
-    sequence = TextField()
-    sequence_id = CharField(null=True)
-    annotations: list[Annotation]
-    mutation_mappings: list[MutationMapping]
-
-    class Meta:
-        table_name = "references"
-
-
 class Protein(BaseModel):
-    name = CharField(primary_key=True)
-    segment = ForeignKeyField(Segment, column_name="segment_name", backref="proteins")
+    name = CharField()
+    segment = ForeignKeyField(Segment, backref="proteins")
     annotations: list[Annotation]
     mutations: list[Mutation]
 
-    class Meta:
-        table_name = "proteins"
+
+class Reference(BaseModel):
+    name = CharField()
+    segment = ForeignKeyField(Segment, backref="references")
+    sequence = TextField()
+    source = CharField()
+    annotations: list[Annotation]
+    mappings: list[Mapping]
 
 
 class Annotation(BaseModel):
+    protein = ForeignKeyField(Protein, backref="annotations")
+    reference = ForeignKeyField(Reference, backref="annotations")
     start = IntegerField()
     end = IntegerField()
-    protein = ForeignKeyField(
-        Protein, column_name="protein_name", backref="annotations"
-    )
-    reference = ForeignKeyField(
-        Reference, column_name="reference_name", backref="annotations"
-    )
-
-    class Meta:
-        table_name = "annotations"
-        primary_key = CompositeKey("start", "end", "protein", "reference")
 
 
 class Mutation(BaseModel):
-    name = CharField(primary_key=True)
-    type = CharField()
-    protein = ForeignKeyField(Protein, column_name="protein_name", backref="mutations")
+    name = CharField(unique=True)
+    type = CharField(choices=[(t.value, t.name) for t in MutationType])
+    protein = ForeignKeyField(Protein, backref="mutations")
     default_position = IntegerField(null=True)
-    mappings: list[MutationMapping]
-    markers: list[MarkerMutation]
-
-    class Meta:
-        table_name = "mutations"
-
-    def __hash__(self):
-        return hash(self.name)
+    mappings: list[Mapping]
+    markers: list[Marker]
 
 
-class MutationMapping(BaseModel):
-    id = AutoField()
-    mutation = ForeignKeyField(
-        Mutation, column_name="mutation_name", backref="mappings"
-    )
-    reference = ForeignKeyField(
-        Reference, column_name="reference_name", backref="mutation_mappings"
-    )
+class Mapping(BaseModel):
+    mutation = ForeignKeyField(Mutation, backref="mappings")
+    reference = ForeignKeyField(Reference, backref="mappings")
     position = IntegerField()
-    ref_seq = CharField()
-    alt_seq = CharField()
-
-    class Meta:
-        table_name = "mutation_mappings"
+    alteration = CharField()
 
 
 class Effect(BaseModel):
-    name = CharField(primary_key=True)
-    marker_effects: list[MarkerEffect]
-
-    class Meta:
-        table_name = "effects"
+    name = CharField()
+    evidences: list[Evidence]
 
 
 class Paper(BaseModel):
-    id = CharField(primary_key=True)
+    short_name = CharField(unique=True)
     title = TextField()
     authors = TextField()
     year = IntegerField(null=True)
     journal = CharField(null=True)
-    web_address = CharField(null=True)
+    url = CharField(null=True)
     doi = CharField(null=True)
-    marker_effects: list[MarkerEffect]
-
-    class Meta:
-        table_name = "papers"
+    evidences: list[Evidence]
 
 
 class Marker(BaseModel):
     _cache: List[Marker] = []
-    id = AutoField()
-    notes = TextField(null=True)
-    effects: list[MarkerEffect]
-    marker_mutations: list[MarkerMutation]
-
-    class Meta:
-        table_name = "markers"
+    mutations = ManyToManyField(Mutation, backref="markers")
+    evidences: list[Evidence]
 
     @staticmethod
     def load(force_reload: bool = False) -> list[Marker]:
@@ -168,9 +131,8 @@ class Marker(BaseModel):
             Marker._cache = list(
                 prefetch(
                     Marker.select(),
-                    MarkerMutation.select(),
                     Mutation.select(),
-                    MarkerEffect.select(),
+                    Evidence.select(),
                     Paper.select(),
                     Effect.select(),
                 )
@@ -178,40 +140,18 @@ class Marker(BaseModel):
         return Marker._cache
 
 
-class MarkerEffect(BaseModel):
-    marker = ForeignKeyField(Marker, column_name="marker_id", backref="effects")
-    paper = ForeignKeyField(Paper, column_name="paper_id", backref="marker_effects")
-    effect = ForeignKeyField(
-        Effect, column_name="effect_name", backref="marker_effects"
-    )
+class Evidence(BaseModel):
+    marker = ForeignKeyField(Marker, backref="evidences")
+    paper = ForeignKeyField(Paper, backref="evidences")
+    effect = ForeignKeyField(Effect, backref="evidences")
     subtype = CharField()
-    in_vivo = IntegerField(null=True)
-    in_vitro = IntegerField(null=True)
-
-    class Meta:
-        table_name = "markers_effects"
-        primary_key = CompositeKey("marker", "paper", "effect", "subtype")
-
-
-class MarkerMutation(BaseModel):
-    marker = ForeignKeyField(
-        Marker, column_name="marker_id", backref="marker_mutations"
-    )
-    mutation = ForeignKeyField(Mutation, column_name="mutation_name", backref="markers")
-
-    class Meta:
-        table_name = "markers_mutations"
-        primary_key = False
+    host = CharField(null=True)
 
 
 class DbVersion(BaseModel):
     major = IntegerField()
     minor = IntegerField()
     date = CharField()
-
-    class Meta:
-        table_name = "db_version"
-        primary_key = False
 
     def __str__(self):
         return f"{self.major}.{self.minor} ({self.date})"
@@ -220,9 +160,6 @@ class DbVersion(BaseModel):
     def check_compatibility():
         version: DbVersion = DbVersion.get_or_none()
         if version is None:
-            raise RuntimeError("Database version not found.")
+            raise MissingVersionError()
         if version.major != REQUIRED_MAJOR_VERSION:
-            raise RuntimeError(
-                f"Incompatible database version: {version}. "
-                f"Expected major version: {REQUIRED_MAJOR_VERSION}."
-            )
+            raise IncompatibleVersionError(version, REQUIRED_MAJOR_VERSION)
