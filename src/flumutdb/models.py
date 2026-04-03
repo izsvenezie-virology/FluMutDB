@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import List
+
 from peewee import (
     AutoField,
     CharField,
@@ -9,7 +11,10 @@ from peewee import (
     IntegerField,
     Model,
     TextField,
+    prefetch,
 )
+
+REQUIRED_MAJOR_VERSION = 7
 
 database_proxy = DatabaseProxy()
 
@@ -22,6 +27,7 @@ BaseModel._meta.database = database_proxy  # type: ignore[attr-defined]
 
 
 class Segment(BaseModel):
+    _cache: list[Segment] = []
     name = CharField(primary_key=True)
     number = IntegerField(null=True)
     references: list[Reference]
@@ -29,6 +35,26 @@ class Segment(BaseModel):
 
     class Meta:
         table_name = "segments"
+
+    @staticmethod
+    def load(force_reload: bool = False) -> list[Segment]:
+        """Load Segment→MutationMapping into memory via prefetch, cached after first call.
+
+        Args:
+            force_reload: Re-fetch from the database even if already cached.
+        """
+        if not Segment._cache or force_reload:
+            Segment._cache = list(
+                prefetch(
+                    Segment.select(),
+                    Reference.select(),
+                    Protein.select(),
+                    Annotation.select(),
+                    Mutation.select(),
+                    MutationMapping.select(),
+                )
+            )
+        return Segment._cache
 
 
 class Reference(BaseModel):
@@ -122,6 +148,7 @@ class Paper(BaseModel):
 
 
 class Marker(BaseModel):
+    _cache: List[Marker] = []
     id = AutoField()
     notes = TextField(null=True)
     effects: list[MarkerEffect]
@@ -129,6 +156,26 @@ class Marker(BaseModel):
 
     class Meta:
         table_name = "markers"
+
+    @staticmethod
+    def load(force_reload: bool = False) -> list[Marker]:
+        """Load Markers into memory, cached after first call.
+
+        Args:
+            force_reload: Re-fetch from the database even if already cached.
+        """
+        if not Marker._cache or force_reload:
+            Marker._cache = list(
+                prefetch(
+                    Marker.select(),
+                    MarkerMutation.select(),
+                    Mutation.select(),
+                    MarkerEffect.select(),
+                    Paper.select(),
+                    Effect.select(),
+                )
+            )
+        return Marker._cache
 
 
 class MarkerEffect(BaseModel):
@@ -165,3 +212,17 @@ class DbVersion(BaseModel):
     class Meta:
         table_name = "db_version"
         primary_key = False
+
+    def __str__(self):
+        return f"{self.major}.{self.minor} ({self.date})"
+
+    @staticmethod
+    def check_compatibility():
+        version: DbVersion = DbVersion.get_or_none()
+        if version is None:
+            raise RuntimeError("Database version not found.")
+        if version.major != REQUIRED_MAJOR_VERSION:
+            raise RuntimeError(
+                f"Incompatible database version: {version}. "
+                f"Expected major version: {REQUIRED_MAJOR_VERSION}."
+            )
