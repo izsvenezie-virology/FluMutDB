@@ -95,11 +95,22 @@ class Mutation(BaseModel):
 class Mapping(BaseModel):
     mutation = ForeignKeyField(Mutation, backref="mappings")
     reference = ForeignKeyField(Reference, backref="mappings")
+    mutation_name = CharField(null=True)
     position = IntegerField()
     alteration = CharField()
 
 
 class Effect(BaseModel):
+    name = CharField()
+    evidences: list[Evidence]
+
+
+class Subtype(BaseModel):
+    name = CharField()
+    evidences: list[Evidence]
+
+
+class Host(BaseModel):
     name = CharField()
     evidences: list[Evidence]
 
@@ -144,8 +155,8 @@ class Evidence(BaseModel):
     marker = ForeignKeyField(Marker, backref="evidences")
     paper = ForeignKeyField(Paper, backref="evidences")
     effect = ForeignKeyField(Effect, backref="evidences")
-    subtype = CharField()
-    host = CharField(null=True)
+    subtype = ForeignKeyField(Subtype, backref="evidences")
+    host = ForeignKeyField(Host, backref="evidences", null=True)
 
 
 class DbVersion(BaseModel):

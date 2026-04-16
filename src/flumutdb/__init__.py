@@ -2,11 +2,13 @@ __version__ = "7.0.0"
 __author__ = "Edoardo Giussani"
 __contact__ = "egiussani@izsvenezie.it"
 
+from .initializer import initialize
 from .models import (
     Annotation,
     DbVersion,
     Effect,
     Evidence,
+    Host,
     Mapping,
     Marker,
     Mutation,
@@ -14,8 +16,8 @@ from .models import (
     Protein,
     Reference,
     Segment,
+    Subtype,
 )
-from .utilities import initialize
 
 __all__ = [
     "initialize",
@@ -24,10 +26,12 @@ __all__ = [
     "Effect",
     "Marker",
     "Evidence",
+    "Host",
     "Mutation",
     "Mapping",
     "Paper",
     "Protein",
     "Reference",
     "Segment",
+    "Subtype",
 ]
