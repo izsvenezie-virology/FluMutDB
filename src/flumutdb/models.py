@@ -37,6 +37,9 @@ class Segment(BaseModel):
     proteins: list[Protein]
     references: list[Reference]
 
+    def __str__(self) -> str:
+        return str(self.name)
+
     _cache: list[Segment] = []
 
     @staticmethod
@@ -71,6 +74,9 @@ class Protein(BaseModel):
     annotations: list[Annotation]
     mutations: list[Mutation]
 
+    def __str__(self) -> str:
+        return f"{self.segment}/{self.name}"
+
 
 class Reference(BaseModel):
     name = CharField()
@@ -80,12 +86,18 @@ class Reference(BaseModel):
     annotations: list[Annotation]
     mappings: list[Mapping]
 
+    def __str__(self) -> str:
+        return f"{self.segment}/{self.name}"
+
 
 class Annotation(BaseModel):
     protein = ForeignKeyField(Protein, backref="annotations")
     reference = ForeignKeyField(Reference, backref="annotations")
     start = IntegerField()
     end = IntegerField()
+
+    def __str__(self) -> str:
+        return f"{self.protein} @ {self.reference}: {self.start}-{self.end}"
 
 
 class Mutation(BaseModel):
@@ -96,6 +108,9 @@ class Mutation(BaseModel):
     mappings: list[Mapping]
     markers: list[Marker]
 
+    def __str__(self) -> str:
+        return str(self.name)
+
 
 class Mapping(BaseModel):
     mutation = ForeignKeyField(Mutation, backref="mappings")
@@ -104,20 +119,32 @@ class Mapping(BaseModel):
     position = IntegerField()
     alteration = CharField()
 
+    def __str__(self) -> str:
+        return f"{self.mutation} @ {self.reference} (pos {self.position}, {self.alteration})"
+
 
 class Effect(BaseModel):
     name = CharField()
     evidences: list[Evidence]
+
+    def __str__(self) -> str:
+        return str(self.name)
 
 
 class Subtype(BaseModel):
     name = CharField()
     evidences: list[Evidence]
 
+    def __str__(self) -> str:
+        return str(self.name)
+
 
 class Host(BaseModel):
     name = CharField()
     evidences: list[Evidence]
+
+    def __str__(self) -> str:
+        return str(self.name)
 
 
 class Paper(BaseModel):
@@ -130,11 +157,20 @@ class Paper(BaseModel):
     doi = CharField(null=True)
     evidences: list[Evidence]
 
+    def __str__(self) -> str:
+        return str(self.short_name)
+
 
 class Marker(BaseModel):
-    _cache: List[Marker] = []
+    name = CharField(unique=True, null=True)
     mutations = ManyToManyField(Mutation, backref="markers")
     evidences: list[Evidence]
+
+    def __str__(self) -> str:
+        mutations = ", ".join(str(m) for m in self.mutations)
+        return f"Marker({mutations})"
+
+    _cache: List[Marker] = []
 
     @staticmethod
     def all(force_reload: bool = False) -> list[Marker]:
@@ -168,19 +204,23 @@ class Evidence(BaseModel):
     subtype = ForeignKeyField(Subtype, backref="evidences")
     host = ForeignKeyField(Host, backref="evidences", null=True)
 
+    def __str__(self) -> str:
+        return f"{self.marker}: {self.effect} in {self.subtype} ({self.paper})"
+
 
 class DbVersion(BaseModel):
     major = IntegerField()
     minor = IntegerField()
     date = CharField()
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.major}.{self.minor} ({self.date})"
 
     @staticmethod
-    def check_compatibility():
+    def is_compatible() -> bool:
         version: DbVersion = DbVersion.get_or_none()
         if version is None:
             raise MissingVersionError()
         if version.major != REQUIRED_MAJOR_VERSION:
             raise IncompatibleVersionError(version, REQUIRED_MAJOR_VERSION)
+        return True

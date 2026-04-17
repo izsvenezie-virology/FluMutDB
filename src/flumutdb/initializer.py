@@ -32,6 +32,6 @@ def initialize(
     else:
         db = SqliteDatabase(path, pragmas={"foreign_keys": 1})
     database_proxy.initialize(db)
-    DbVersion.check_compatibility()
+    DbVersion.is_compatible()
     Segment.clear_cache()
     Marker.clear_cache()
