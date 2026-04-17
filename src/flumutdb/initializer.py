@@ -1,13 +1,17 @@
 from pathlib import Path
+from typing import Optional
 
 from peewee import SqliteDatabase
 
-from flumutdb.models import DbVersion, database_proxy
+from flumutdb.models import DbVersion, Marker, Segment, database_proxy
 
 _BUNDLED_DB = Path(__file__).parent / "data" / "flumut_db.sqlite"
 
 
-def initialize(db_path=None, read_only=True):
+def initialize(
+    db_path: Optional[str] = None,
+    read_only: bool = True,
+):
     """Connect to the FluMutDB database.
 
     Args:
@@ -29,3 +33,5 @@ def initialize(db_path=None, read_only=True):
         db = SqliteDatabase(path, pragmas={"foreign_keys": 1})
     database_proxy.initialize(db)
     DbVersion.check_compatibility()
+    Segment.clear_cache()
+    Marker.clear_cache()

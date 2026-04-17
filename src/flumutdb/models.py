@@ -59,6 +59,11 @@ class Segment(BaseModel):
             )
         return Segment._cache
 
+    @staticmethod
+    def clear_cache():
+        """Clear the Segment cache, forcing a reload on next access."""
+        Segment._cache = []
+
 
 class Protein(BaseModel):
     name = CharField()
@@ -149,6 +154,11 @@ class Marker(BaseModel):
                 )
             )
         return Marker._cache
+
+    @staticmethod
+    def clear_cache():
+        """Clear the Marker cache, forcing a reload on next access."""
+        Marker._cache = []
 
 
 class Evidence(BaseModel):
