@@ -29,11 +29,10 @@ include-package-data = true
 package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
-namespaces = true
 where = ["src"]
 
 [tool.setuptools.package-data]
-flumutdb = ["*"]
+flumutdb = ["**/*"]
 
 [tool.setuptools.dynamic]
 version = {attr = "flumutdb.__version__"}

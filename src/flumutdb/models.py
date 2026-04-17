@@ -40,8 +40,8 @@ class Segment(BaseModel):
     _cache: list[Segment] = []
 
     @staticmethod
-    def load(force_reload: bool = False) -> list[Segment]:
-        """Load Segment→MutationMapping into memory via prefetch, cached after first call.
+    def all(force_reload: bool = False) -> list[Segment]:
+        """Return all Segment instances, cached after first call.
 
         Args:
             force_reload: Re-fetch from the database even if already cached.
@@ -137,8 +137,8 @@ class Marker(BaseModel):
     evidences: list[Evidence]
 
     @staticmethod
-    def load(force_reload: bool = False) -> list[Marker]:
-        """Load Markers into memory, cached after first call.
+    def all(force_reload: bool = False) -> list[Marker]:
+        """Returns a list of all Marker instances, cached after first call.
 
         Args:
             force_reload: Re-fetch from the database even if already cached.
