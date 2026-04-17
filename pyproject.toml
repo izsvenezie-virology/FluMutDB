@@ -12,16 +12,14 @@ dependencies = [
 ]
 description = "A database of influenza virus markers and their effects on antigenicity and drug resistance."
 dynamic = ["version"]
+license = "AGPL-3.0"
+license-files = ["LICENSE"]
 name = "flumutdb"
 requires-python = ">=3.7"
 
 [project.readme]
 content-type = "text/markdown"
 file = "README.md"
-
-[project.license]
-content-type = "text/plain"
-file = "LICENSE"
 
 [project.urls]
 Home-page = "https://github.com/izsvenezie-virology/FluMutDb"
