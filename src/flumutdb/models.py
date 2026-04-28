@@ -89,6 +89,19 @@ class Reference(BaseModel):
     def __str__(self) -> str:
         return f"{self.segment}/{self.name}"
 
+    _cache: list[Reference] = []
+
+    @staticmethod
+    def all(force_reload: bool = False) -> list[Reference]:
+        """Return all Reference instances, cached after first call.
+
+        Args:
+            force_reload: Re-fetch from the database even if already cached.
+        """
+        if not Reference._cache or force_reload:
+            Reference._cache = [ref for seg in Segment.all() for ref in seg.references]
+        return Reference._cache
+
 
 class Annotation(BaseModel):
     protein = ForeignKeyField(Protein, backref="annotations")
