@@ -4,7 +4,6 @@ from enum import Enum
 from typing import List
 
 from peewee import (
-    DatabaseProxy,
     ForeignKeyField,
     IntegerField,
     ManyToManyField,
@@ -13,11 +12,8 @@ from peewee import (
     prefetch,
 )
 
+from flumutdb.core import DATABASE_PROXY
 from flumutdb.exceptions import IncompatibleVersionError, MissingVersionError
-
-REQUIRED_MAJOR_VERSION = 7
-
-database_proxy = DatabaseProxy()
 
 
 class MutationType(Enum):
@@ -28,7 +24,7 @@ class BaseModel(Model):
     notes = TextField(null=True)
 
 
-BaseModel._meta.database = database_proxy  # type: ignore[attr-defined]
+BaseModel._meta.database = DATABASE_PROXY  # type: ignore[attr-defined]
 
 
 class Segment(BaseModel):
@@ -195,6 +191,7 @@ class Marker(BaseModel):
             Marker._cache = list(
                 prefetch(
                     Marker.select(),
+                    Marker.mutations.through_model.select(),  # type: ignore[union-attr]
                     Mutation.select(),
                     Evidence.select(),
                     Paper.select(),

@@ -35,3 +35,6 @@ __all__ = [
     "Segment",
     "Subtype",
 ]
+
+
+initialize()

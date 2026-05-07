@@ -3,9 +3,8 @@ from typing import Optional
 
 from peewee import SqliteDatabase
 
-from flumutdb.models import DbVersion, Marker, Segment, database_proxy
-
-_BUNDLED_DB = Path(__file__).parent / "data" / "flumut_db.sqlite"
+from flumutdb.core import BUNDLED_DB, DATABASE_PROXY
+from flumutdb.models import DbVersion, Marker, Segment
 
 
 def initialize(
@@ -22,7 +21,7 @@ def initialize(
     Raises:
         FileNotFoundError: If the given path does not exist.
     """
-    path = Path(db_path) if db_path is not None else _BUNDLED_DB
+    path = Path(db_path) if db_path is not None else BUNDLED_DB
     if not path.exists():
         raise FileNotFoundError(f"Database not found: {path}")
     if read_only:
@@ -31,7 +30,7 @@ def initialize(
         )
     else:
         db = SqliteDatabase(path, pragmas={"foreign_keys": 1})
-    database_proxy.initialize(db)
+    DATABASE_PROXY.initialize(db)
     DbVersion.is_compatible()
     Segment.clear_cache()
     Marker.clear_cache()
